@@ -1,0 +1,10 @@
+.DS_Store
+._*
+.vscode
+node_modules
+npm-debug.log
+yarn-error.log
+junit.xml
+/bower_components
+package-lock.json
+Lol.pem

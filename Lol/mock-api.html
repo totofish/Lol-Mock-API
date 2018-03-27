@@ -1,0 +1,41 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <script src="mock-api.js"></script>
+  <style>
+    html,
+    body {
+      height: 370px;
+    }
+    #mockURL {
+      width: 320px;
+    }
+    #status {
+      width: 120px;
+    }
+    input,
+    textarea {
+      margin-top: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Mock API</h1>
+  <label>URL</label>
+  <input type="text" name="mockURL" id="mockURL" placeholder="API 路徑" value="/api/ajaxContactForOverseaJob">
+  <br>
+  <br>
+  <label>Response</label> <input type="text" name="status" id="status" value="200" placeholder="HTTP Status Code">
+  <textarea id="response" name="response" rows="10" cols="50" placeholder="回傳 JSON 內容"></textarea>
+  <br>
+  <br>
+  <label>Timeout</label>
+  <input type="text" name="timeout" id="timeout" placeholder="延遲時間"> ms
+  <br>
+  <br>
+  <button id="btn">Mock</button>
+</body>
+
+</html>
