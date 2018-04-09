@@ -20,6 +20,6 @@
   "web_accessible_resources": ["broswer/xhr-mock.js"],
   "content_scripts" : [{
     "matches" : ["*://*/*"],
-    "js" : ["content.js"]
+    "js" : ["extension/content.js"]
   }]
 }

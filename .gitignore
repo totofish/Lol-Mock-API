@@ -8,3 +8,4 @@ junit.xml
 /bower_components
 package-lock.json
 Lol.pem
+*.map

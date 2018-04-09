@@ -1,0 +1,27 @@
+{
+  "name": "Lol-Mock-API",
+  "version": "1.0.0",
+  "description": "Mock API chrome extension",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development -w --devtool source-map",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/totofish/Lol-Mock-API.git"
+  },
+  "author": "totofish",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/totofish/Lol-Mock-API/issues"
+  },
+  "homepage": "https://github.com/totofish/Lol-Mock-API#readme",
+  "dependencies": {
+    "xhr-mock": "^2.3.1"
+  },
+  "devDependencies": {
+    "webpack": "^4.5.0",
+    "webpack-cli": "^2.0.14"
+  }
+}
