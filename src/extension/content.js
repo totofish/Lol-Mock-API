@@ -10,10 +10,10 @@ function initial () {
     document.getElementsByTagName("body")[0].appendChild(script);
     script.src = chrome.extension.getURL('broswer/xhr-mock.js');
     script.onload = () => {
-      console.log('xhrMockApi init');
+      // console.log('xhrMockApi init');
     };
     script.onerror = () => {
-      console.log('xhrMockApi error');
+      // console.log('xhrMockApi error');
     }
   }
 }

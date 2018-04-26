@@ -9,6 +9,12 @@ function mock(e) {
     new Notification("請確認欄位是否設定完成", { icon: '../icon48.png' });
     return;
   }
+  try {
+    JSON.parse(response);
+  } catch(e) {
+    new Notification("Response 需要 JSON 字串", { icon: '../icon48.png' });
+    return;
+  }
   const mockExtensionData = {
     response,
     mockURL,
@@ -18,7 +24,7 @@ function mock(e) {
 
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     chrome.tabs.sendMessage(tabs[0].id, { ...mockExtensionData, type: 'mock' }, (response) => {
-        console.log(`response: ${response}`);
+        // console.log(`response: ${response}`);
         localStorage.setItem('mockExtensionData', JSON.stringify(mockExtensionData));
       });
   });
