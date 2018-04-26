@@ -82,6 +82,20 @@ body {
       width: 100%;
       margin-bottom: 5px;
       display: block;
+
+      &.label--warning {
+        &:after {
+          content: "";
+          width: 6px;
+          height: 6px;
+          background-color: $color-red;
+          border-radius: 100%;
+          display: inline-block;
+          margin-left: 6px;
+          margin-top: 6px;
+          position: absolute;
+        }
+      }
     }
 
     input,
