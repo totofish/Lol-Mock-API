@@ -9,6 +9,12 @@ function initial () {
     script.id = 'xhrMockApi';
     document.getElementsByTagName("body")[0].appendChild(script);
     script.src = chrome.extension.getURL('broswer/xhr-mock.js');
+    script.onload = () => {
+      console.log('xhrMockApi init');
+    };
+    script.onerror = () => {
+      console.log('xhrMockApi error');
+    }
   }
 }
 
@@ -26,6 +32,7 @@ function callMockAPI(mockExtensionData) {
 
   postMessage({
     id: 'xhr-mock-api-message',
+    type: 'mock',
     mockURL: mockExtensionData.mockURL,
     status: parseInt(mockExtensionData.status),
     response: JSON.stringify(mockExtensionData.response),
@@ -35,10 +42,17 @@ function callMockAPI(mockExtensionData) {
 
 // 偵聽主程式訊息
 chrome.runtime.onMessage.addListener((mockExtensionData, sender, sendResponse) => {
-  mockExtensionData.response = JSON.parse(mockExtensionData.response);
-  callMockAPI(mockExtensionData);
-  // 回給主程式 ok
-  sendResponse('ok');
+  switch (mockExtensionData.type) {
+    case 'checkState':
+      sendResponse(window.xhrMockApi !== undefined);
+      break;
+    case 'mock':
+    default:
+      mockExtensionData.response = JSON.parse(mockExtensionData.response);
+      callMockAPI(mockExtensionData);
+      // 回給主程式 ok
+      sendResponse('ok');
+  }
 });
 
 initial();

@@ -1,1 +1,3213 @@
-!function(t){var e={};function r(n){if(e[n])return e[n].exports;var o=e[n]={i:n,l:!1,exports:{}};return t[n].call(o.exports,o,o.exports,r),o.l=!0,o.exports}r.m=t,r.c=e,r.d=function(t,e,n){r.o(t,e)||Object.defineProperty(t,e,{configurable:!1,enumerable:!0,get:n})},r.r=function(t){Object.defineProperty(t,"__esModule",{value:!0})},r.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return r.d(e,"a",e),e},r.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},r.p="",r(r.s=27)}([function(t,e,r){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var n=r(8),o=r(5);e.MockRequest=o.default;var s=r(1);e.MockResponse=s.default;var i=r(11);e.proxy=i.default,e.default=n.default},function(t,e,r){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var n=function(){function t(){this._status=200,this._reason="OK",this._headers={},this._body=null}return t.prototype.status=function(t){return void 0!==t?(this._status=t,this):this._status},t.prototype.reason=function(t){return void 0!==t?(this._reason=t,this):this._reason},t.prototype.statusText=function(t){return console.warn("xhr-mock: MockResponse.statusText() has been deprecated. Use MockResponse.reason() instead."),void 0!==t?this.reason(t):this.reason()},t.prototype.header=function(t,e){return void 0!==e?(this._headers[t.toLowerCase()]=e,this):this._headers[t.toLowerCase()]||null},t.prototype.headers=function(t){if("object"==typeof t){for(var e in t)t.hasOwnProperty(e)&&this.header(e,t[e]);return this}return this._headers},t.prototype.body=function(t){return void 0!==t?(this._body=t,this):this._body},t}();e.default=n},function(t,e,r){"use strict";var n,o=this&&this.__extends||(n=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(t,e){t.__proto__=e}||function(t,e){for(var r in e)e.hasOwnProperty(r)&&(t[r]=e[r])},function(t,e){function r(){this.constructor=t}n(t,e),t.prototype=null===e?Object.create(e):(r.prototype=e.prototype,new r)});Object.defineProperty(e,"__esModule",{value:!0});var s=function(t){function e(r){var n=t.call(this,r)||this;return Object.setPrototypeOf(n,e.prototype),n}return o(e,t),e}(Error);e.MockError=s},function(t,e,r){"use strict";var n,o=this&&this.__extends||(n=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(t,e){t.__proto__=e}||function(t,e){for(var r in e)e.hasOwnProperty(r)&&(t[r]=e[r])},function(t,e){function r(){this.constructor=t}n(t,e),t.prototype=null===e?Object.create(e):(r.prototype=e.prototype,new r)});Object.defineProperty(e,"__esModule",{value:!0});var s=function(t){function e(){return null!==t&&t.apply(this,arguments)||this}return o(e,t),e}(r(14).default);e.default=s},function(t,e,r){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var n=function(){function t(t,e){if(this.eventPhase=0,this.type=t||"",e){var r=e.scoped,n=void 0!==r&&r,o=e.bubbles,s=void 0!==o&&o,i=e.cancelable,a=void 0!==i&&i;this.scoped=n,this.bubbles=s,this.cancelable=a}}return t.prototype.initEvent=function(t,e,r){throw new Error},t.prototype.preventDefault=function(){throw new Error},t.prototype.stopImmediatePropagation=function(){throw new Error},t.prototype.stopPropagation=function(){throw new Error},t.prototype.deepPath=function(){throw new Error},t}();e.default=n},function(t,e,r){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var n=r(6),o=["CONNECT","TRACE","TRACK"],s=["DELETE","GET","HEAD","OPTIONS","POST","PUT"],i=function(){function t(){this._method="GET",this._url=n.parseURL(""),this._headers={},this._body=null}return t.prototype.method=function(t){if(void 0!==t){if(-1!==o.indexOf(t.toUpperCase()))throw new Error('xhr-mock: Method "'+t+'" is forbidden.');return-1!==s.indexOf(t.toUpperCase())?this._method=t.toUpperCase():this._method=t,this}return this._method},t.prototype.url=function(t){return"string"==typeof t?(this._url=n.parseURL(t),this):this._url},t.prototype.header=function(t,e){return void 0!==e?(this._headers[t.toLowerCase()]=e,this):this._headers[t.toLowerCase()]||null},t.prototype.headers=function(t){if("object"==typeof t){for(var e in t)t.hasOwnProperty(e)&&this.header(e,t[e]);return this}return this._headers},t.prototype.body=function(t){return void 0!==t?(this._body=t,this):this._body},t}();e.default=i},function(t,e,r){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var n=r(23),o=function(){function t(){}return t.prototype.toString=function(){return s(this)},t}();function s(t){var e={protocol:t.protocol,auth:t.username&&t.password?t.username+":"+t.password:t.username,hostname:t.host,port:"number"==typeof t.port?String(t.port):t.port,pathname:t.path,query:t.query,hash:t.hash};return n.format(e)}e.parseURL=function(t){var e=new o;if(!t)return e;var r=n.parse(t,!0);if(r.protocol&&(e.protocol=r.protocol.substr(0,r.protocol.length-1)),r.auth){var s=r.auth.split(":"),i=s[0],a=s[1];i&&a?(e.username=i,e.password=a):e.username=i}return r.hostname&&(e.host=r.hostname),r.port&&(e.port=parseInt(r.port,10)),r.pathname&&(e.path=r.pathname),r.query&&(e.query=r.query),r.hash&&(e.hash=r.hash),e},e.formatURL=s},function(t,e){var r;r=function(){return this}();try{r=r||Function("return this")()||(0,eval)("this")}catch(t){"object"==typeof window&&(r=window)}t.exports=r},function(t,e,r){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var n=r(26),o=r(25),s=r(24),i=n.XMLHttpRequest,a=function(){function t(){this.RealXMLHttpRequest=i}return t.prototype.setup=function(){return n.XMLHttpRequest=s.default,this.reset(),this},t.prototype.teardown=function(){return this.reset(),n.XMLHttpRequest=i,this},t.prototype.reset=function(){return s.default.removeAllHandlers(),this},t.prototype.error=function(t){return s.default.errorCallback=t,this},t.prototype.mock=function(t,e,r){if(console.warn("xhr-mock: XHRMock.mock() has been deprecated. Use XHRMock.use() instead."),"string"==typeof t&&("string"==typeof e||e instanceof RegExp)&&void 0!==r)return this.use(t,e,r);if("function"==typeof t)return this.use(t);throw new Error("xhr-mock: Invalid handler.")},t.prototype.use=function(t,e,r){var n;if("string"==typeof t&&("string"==typeof e||e instanceof RegExp)&&void 0!==r)n=o.default(t,e,r);else{if("function"!=typeof t)throw new Error("xhr-mock: Invalid handler.");n=t}return s.default.addHandler(n),this},t.prototype.get=function(t,e){return this.use("GET",t,e)},t.prototype.post=function(t,e){return this.use("POST",t,e)},t.prototype.put=function(t,e){return this.use("PUT",t,e)},t.prototype.patch=function(t,e){return this.use("PATCH",t,e)},t.prototype.delete=function(t,e){return this.use("DELETE",t,e)},t}();e.XHRMock=a,e.default=new a},,,function(t,e,r){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var n=r(8);e.default=function(t,e){return new Promise(function(r,o){var s=new n.default.RealXMLHttpRequest;s.onerror=function(t){return o(t.error)},s.onloadend=function(){var t,n;e.status(s.status).reason(s.statusText).headers((t=s.getAllResponseHeaders(),n={},t.split("\r\n").forEach(function(t){var e=t.split(":",2),r=e[0],o=e[1];r&&o&&(n[r]=o.replace(/^\s*/g,"").replace(/\s*$/g,""))}),n)).body(s.responseText),r(e)},s.open(t.method(),t.url().toString());var i=t.headers();Object.keys(i).forEach(function(t){var e=i[t];s.setRequestHeader(t,e)}),s.send(t.body())})}},function(t,e,r){"use strict";function n(t,e){return t.split("\n").map(function(t,r){return Array(e+1).join(" ")+t}).join("\n")}Object.defineProperty(e,"__esModule",{value:!0}),e.formatError=function(t,e,r){return"xhr-mock: "+t+"\n\n  "+n(function(t){var e=Object.keys(t.headers()).map(function(e){return e+": "+t.header(e)}),r=t.body()?t.body():"";return t.method()+" "+t.url()+" HTTP/1.1\n"+(e?e.join("\n")+"\n":"")+"\n"+(r||"")+"\n"}(e),2).trim()+"\n  "+(void 0!==r?"\n"+n(r&&r.stack||r&&r.message||"Error: "+r,2):"")+"\n"}},function(t,e,r){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var n=r(2),o=new n.MockError("No handler returned a response for the request.");e.sync=function(t,e,r){for(var s=0;s<t.length;++s){var i=t[s](e,r);if(i){if((a=i)&&void 0!==a.then)throw new n.MockError("A handler returned a Promise<MockResponse> for a synchronous request.");return i}}var a;throw o},e.async=function(t,e,r){return t.reduce(function(t,n){return t.then(function(t){return t||n(e,r)})},Promise.resolve(void 0)).then(function(t){if(!t)throw o;return t})}},function(t,e,r){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var n=function(){function t(){this.listeners={}}return t.prototype.addEventListener=function(t,e,r){this.listeners=this.listeners||{},e&&(this.listeners[t]||(this.listeners[t]=[]),-1===this.listeners[t].indexOf(e)&&this.listeners[t].push(e))},t.prototype.removeEventListener=function(t,e,r){if(this.listeners=this.listeners||{},e&&this.listeners[t]){var n=this.listeners[t].indexOf(e);-1!==n&&this.listeners[t].splice(n,1)}},t.prototype.dispatchEvent=function(t){var e=this;this.listeners=this.listeners||{},t.target=this,t.currentTarget=this;var r=this["on"+t.type];return r&&r.call(this,t),!this.listeners[t.type]||(this.listeners[t.type].forEach(function(r){"function"==typeof r?r.call(e,t):r.handleEvent.call(e,t)}),!0)},t}();e.default=n},function(t,e,r){"use strict";var n,o=this&&this.__extends||(n=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(t,e){t.__proto__=e}||function(t,e){for(var r in e)e.hasOwnProperty(r)&&(t[r]=e[r])},function(t,e){function r(){this.constructor=t}n(t,e),t.prototype=null===e?Object.create(e):(r.prototype=e.prototype,new r)});Object.defineProperty(e,"__esModule",{value:!0});var s=function(t){function e(){return null!==t&&t.apply(this,arguments)||this}return o(e,t),e}(r(3).default);e.default=s},function(t,e,r){"use strict";var n,o=this&&this.__extends||(n=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(t,e){t.__proto__=e}||function(t,e){for(var r in e)e.hasOwnProperty(r)&&(t[r]=e[r])},function(t,e){function r(){this.constructor=t}n(t,e),t.prototype=null===e?Object.create(e):(r.prototype=e.prototype,new r)});Object.defineProperty(e,"__esModule",{value:!0});var s=function(t){function e(e,r){var n=t.call(this,e,r)||this;if(r){var o=r.lengthComputable,s=void 0!==o&&o,i=r.loaded,a=void 0===i?0:i,h=r.total,u=void 0===h?0:h;n.lengthComputable=s,n.loaded=a,n.total=u}return n}return o(e,t),e.prototype.initProgressEvent=function(t,e,r,n,o,s){throw new Error},e}(r(4).default);e.default=s},function(t,e,r){"use strict";var n=function(t){switch(typeof t){case"string":return t;case"boolean":return t?"true":"false";case"number":return isFinite(t)?t:"";default:return""}};t.exports=function(t,e,r,a){return e=e||"&",r=r||"=",null===t&&(t=void 0),"object"==typeof t?s(i(t),function(i){var a=encodeURIComponent(n(i))+r;return o(t[i])?s(t[i],function(t){return a+encodeURIComponent(n(t))}).join(e):a+encodeURIComponent(n(t[i]))}).join(e):a?encodeURIComponent(n(a))+r+encodeURIComponent(n(t)):""};var o=Array.isArray||function(t){return"[object Array]"===Object.prototype.toString.call(t)};function s(t,e){if(t.map)return t.map(e);for(var r=[],n=0;n<t.length;n++)r.push(e(t[n],n));return r}var i=Object.keys||function(t){var e=[];for(var r in t)Object.prototype.hasOwnProperty.call(t,r)&&e.push(r);return e}},function(t,e,r){"use strict";function n(t,e){return Object.prototype.hasOwnProperty.call(t,e)}t.exports=function(t,e,r,s){e=e||"&",r=r||"=";var i={};if("string"!=typeof t||0===t.length)return i;var a=/\+/g;t=t.split(e);var h=1e3;s&&"number"==typeof s.maxKeys&&(h=s.maxKeys);var u=t.length;h>0&&u>h&&(u=h);for(var c=0;c<u;++c){var p,l,f,d,y=t[c].replace(a,"%20"),v=y.indexOf(r);v>=0?(p=y.substr(0,v),l=y.substr(v+1)):(p=y,l=""),f=decodeURIComponent(p),d=decodeURIComponent(l),n(i,f)?o(i[f])?i[f].push(d):i[f]=[i[f],d]:i[f]=d}return i};var o=Array.isArray||function(t){return"[object Array]"===Object.prototype.toString.call(t)}},function(t,e,r){"use strict";e.decode=e.parse=r(18),e.encode=e.stringify=r(17)},function(t,e,r){"use strict";t.exports={isString:function(t){return"string"==typeof t},isObject:function(t){return"object"==typeof t&&null!==t},isNull:function(t){return null===t},isNullOrUndefined:function(t){return null==t}}},function(t,e){t.exports=function(t){return t.webpackPolyfill||(t.deprecate=function(){},t.paths=[],t.children||(t.children=[]),Object.defineProperty(t,"loaded",{enumerable:!0,get:function(){return t.l}}),Object.defineProperty(t,"id",{enumerable:!0,get:function(){return t.i}}),t.webpackPolyfill=1),t}},function(t,e,r){(function(t,n){var o;/*! https://mths.be/punycode v1.4.1 by @mathias */!function(s){"object"==typeof e&&e&&e.nodeType,"object"==typeof t&&t&&t.nodeType;var i="object"==typeof n&&n;i.global!==i&&i.window!==i&&i.self;var a,h=2147483647,u=36,c=1,p=26,l=38,f=700,d=72,y=128,v="-",m=/^xn--/,b=/[^\x20-\x7E]/,E=/[\x2E\u3002\uFF0E\uFF61]/g,w={overflow:"Overflow: input needs wider integers to process","not-basic":"Illegal input >= 0x80 (not a basic code point)","invalid-input":"Invalid input"},O=u-c,g=Math.floor,_=String.fromCharCode;function j(t){throw new RangeError(w[t])}function R(t,e){for(var r=t.length,n=[];r--;)n[r]=e(t[r]);return n}function P(t,e){var r=t.split("@"),n="";return r.length>1&&(n=r[0]+"@",t=r[1]),n+R((t=t.replace(E,".")).split("."),e).join(".")}function x(t){for(var e,r,n=[],o=0,s=t.length;o<s;)(e=t.charCodeAt(o++))>=55296&&e<=56319&&o<s?56320==(64512&(r=t.charCodeAt(o++)))?n.push(((1023&e)<<10)+(1023&r)+65536):(n.push(e),o--):n.push(e);return n}function S(t){return R(t,function(t){var e="";return t>65535&&(e+=_((t-=65536)>>>10&1023|55296),t=56320|1023&t),e+=_(t)}).join("")}function A(t,e){return t+22+75*(t<26)-((0!=e)<<5)}function T(t,e,r){var n=0;for(t=r?g(t/f):t>>1,t+=g(t/e);t>O*p>>1;n+=u)t=g(t/O);return g(n+(O+1)*t/(t+l))}function C(t){var e,r,n,o,s,i,a,l,f,m,b,E=[],w=t.length,O=0,_=y,R=d;for((r=t.lastIndexOf(v))<0&&(r=0),n=0;n<r;++n)t.charCodeAt(n)>=128&&j("not-basic"),E.push(t.charCodeAt(n));for(o=r>0?r+1:0;o<w;){for(s=O,i=1,a=u;o>=w&&j("invalid-input"),((l=(b=t.charCodeAt(o++))-48<10?b-22:b-65<26?b-65:b-97<26?b-97:u)>=u||l>g((h-O)/i))&&j("overflow"),O+=l*i,!(l<(f=a<=R?c:a>=R+p?p:a-R));a+=u)i>g(h/(m=u-f))&&j("overflow"),i*=m;R=T(O-s,e=E.length+1,0==s),g(O/e)>h-_&&j("overflow"),_+=g(O/e),O%=e,E.splice(O++,0,_)}return S(E)}function N(t){var e,r,n,o,s,i,a,l,f,m,b,E,w,O,R,P=[];for(E=(t=x(t)).length,e=y,r=0,s=d,i=0;i<E;++i)(b=t[i])<128&&P.push(_(b));for(n=o=P.length,o&&P.push(v);n<E;){for(a=h,i=0;i<E;++i)(b=t[i])>=e&&b<a&&(a=b);for(a-e>g((h-r)/(w=n+1))&&j("overflow"),r+=(a-e)*w,e=a,i=0;i<E;++i)if((b=t[i])<e&&++r>h&&j("overflow"),b==e){for(l=r,f=u;!(l<(m=f<=s?c:f>=s+p?p:f-s));f+=u)R=l-m,O=u-m,P.push(_(A(m+R%O,0))),l=g(R/O);P.push(_(A(l,0))),s=T(r,w,n==o),r=0,++n}++r,++e}return P.join("")}a={version:"1.4.1",ucs2:{decode:x,encode:S},decode:C,encode:N,toASCII:function(t){return P(t,function(t){return b.test(t)?"xn--"+N(t):t})},toUnicode:function(t){return P(t,function(t){return m.test(t)?C(t.slice(4).toLowerCase()):t})}},void 0===(o=function(){return a}.call(e,r,e,t))||(t.exports=o)}()}).call(this,r(21)(t),r(7))},function(t,e,r){"use strict";var n=r(22),o=r(20);function s(){this.protocol=null,this.slashes=null,this.auth=null,this.host=null,this.port=null,this.hostname=null,this.hash=null,this.search=null,this.query=null,this.pathname=null,this.path=null,this.href=null}e.parse=E,e.resolve=function(t,e){return E(t,!1,!0).resolve(e)},e.resolveObject=function(t,e){return t?E(t,!1,!0).resolveObject(e):e},e.format=function(t){o.isString(t)&&(t=E(t));return t instanceof s?t.format():s.prototype.format.call(t)},e.Url=s;var i=/^([a-z0-9.+-]+:)/i,a=/:[0-9]*$/,h=/^(\/\/?(?!\/)[^\?\s]*)(\?[^\s]*)?$/,u=["{","}","|","\\","^","`"].concat(["<",">",'"',"`"," ","\r","\n","\t"]),c=["'"].concat(u),p=["%","/","?",";","#"].concat(c),l=["/","?","#"],f=/^[+a-z0-9A-Z_-]{0,63}$/,d=/^([+a-z0-9A-Z_-]{0,63})(.*)$/,y={javascript:!0,"javascript:":!0},v={javascript:!0,"javascript:":!0},m={http:!0,https:!0,ftp:!0,gopher:!0,file:!0,"http:":!0,"https:":!0,"ftp:":!0,"gopher:":!0,"file:":!0},b=r(19);function E(t,e,r){if(t&&o.isObject(t)&&t instanceof s)return t;var n=new s;return n.parse(t,e,r),n}s.prototype.parse=function(t,e,r){if(!o.isString(t))throw new TypeError("Parameter 'url' must be a string, not "+typeof t);var s=t.indexOf("?"),a=-1!==s&&s<t.indexOf("#")?"?":"#",u=t.split(a);u[0]=u[0].replace(/\\/g,"/");var E=t=u.join(a);if(E=E.trim(),!r&&1===t.split("#").length){var w=h.exec(E);if(w)return this.path=E,this.href=E,this.pathname=w[1],w[2]?(this.search=w[2],this.query=e?b.parse(this.search.substr(1)):this.search.substr(1)):e&&(this.search="",this.query={}),this}var O=i.exec(E);if(O){var g=(O=O[0]).toLowerCase();this.protocol=g,E=E.substr(O.length)}if(r||O||E.match(/^\/\/[^@\/]+@[^@\/]+/)){var _="//"===E.substr(0,2);!_||O&&v[O]||(E=E.substr(2),this.slashes=!0)}if(!v[O]&&(_||O&&!m[O])){for(var j,R,P=-1,x=0;x<l.length;x++){-1!==(S=E.indexOf(l[x]))&&(-1===P||S<P)&&(P=S)}-1!==(R=-1===P?E.lastIndexOf("@"):E.lastIndexOf("@",P))&&(j=E.slice(0,R),E=E.slice(R+1),this.auth=decodeURIComponent(j)),P=-1;for(x=0;x<p.length;x++){var S;-1!==(S=E.indexOf(p[x]))&&(-1===P||S<P)&&(P=S)}-1===P&&(P=E.length),this.host=E.slice(0,P),E=E.slice(P),this.parseHost(),this.hostname=this.hostname||"";var A="["===this.hostname[0]&&"]"===this.hostname[this.hostname.length-1];if(!A)for(var T=this.hostname.split(/\./),C=(x=0,T.length);x<C;x++){var N=T[x];if(N&&!N.match(f)){for(var q="",k=0,D=N.length;k<D;k++)N.charCodeAt(k)>127?q+="x":q+=N[k];if(!q.match(f)){var M=T.slice(0,x),U=T.slice(x+1),I=N.match(d);I&&(M.push(I[1]),U.unshift(I[2])),U.length&&(E="/"+U.join(".")+E),this.hostname=M.join(".");break}}}this.hostname.length>255?this.hostname="":this.hostname=this.hostname.toLowerCase(),A||(this.hostname=n.toASCII(this.hostname));var L=this.port?":"+this.port:"",H=this.hostname||"";this.host=H+L,this.href+=this.host,A&&(this.hostname=this.hostname.substr(1,this.hostname.length-2),"/"!==E[0]&&(E="/"+E))}if(!y[g])for(x=0,C=c.length;x<C;x++){var G=c[x];if(-1!==E.indexOf(G)){var X=encodeURIComponent(G);X===G&&(X=escape(G)),E=E.split(G).join(X)}}var F=E.indexOf("#");-1!==F&&(this.hash=E.substr(F),E=E.slice(0,F));var V=E.indexOf("?");if(-1!==V?(this.search=E.substr(V),this.query=E.substr(V+1),e&&(this.query=b.parse(this.query)),E=E.slice(0,V)):e&&(this.search="",this.query={}),E&&(this.pathname=E),m[g]&&this.hostname&&!this.pathname&&(this.pathname="/"),this.pathname||this.search){L=this.pathname||"";var B=this.search||"";this.path=L+B}return this.href=this.format(),this},s.prototype.format=function(){var t=this.auth||"";t&&(t=(t=encodeURIComponent(t)).replace(/%3A/i,":"),t+="@");var e=this.protocol||"",r=this.pathname||"",n=this.hash||"",s=!1,i="";this.host?s=t+this.host:this.hostname&&(s=t+(-1===this.hostname.indexOf(":")?this.hostname:"["+this.hostname+"]"),this.port&&(s+=":"+this.port)),this.query&&o.isObject(this.query)&&Object.keys(this.query).length&&(i=b.stringify(this.query));var a=this.search||i&&"?"+i||"";return e&&":"!==e.substr(-1)&&(e+=":"),this.slashes||(!e||m[e])&&!1!==s?(s="//"+(s||""),r&&"/"!==r.charAt(0)&&(r="/"+r)):s||(s=""),n&&"#"!==n.charAt(0)&&(n="#"+n),a&&"?"!==a.charAt(0)&&(a="?"+a),e+s+(r=r.replace(/[?#]/g,function(t){return encodeURIComponent(t)}))+(a=a.replace("#","%23"))+n},s.prototype.resolve=function(t){return this.resolveObject(E(t,!1,!0)).format()},s.prototype.resolveObject=function(t){if(o.isString(t)){var e=new s;e.parse(t,!1,!0),t=e}for(var r=new s,n=Object.keys(this),i=0;i<n.length;i++){var a=n[i];r[a]=this[a]}if(r.hash=t.hash,""===t.href)return r.href=r.format(),r;if(t.slashes&&!t.protocol){for(var h=Object.keys(t),u=0;u<h.length;u++){var c=h[u];"protocol"!==c&&(r[c]=t[c])}return m[r.protocol]&&r.hostname&&!r.pathname&&(r.path=r.pathname="/"),r.href=r.format(),r}if(t.protocol&&t.protocol!==r.protocol){if(!m[t.protocol]){for(var p=Object.keys(t),l=0;l<p.length;l++){var f=p[l];r[f]=t[f]}return r.href=r.format(),r}if(r.protocol=t.protocol,t.host||v[t.protocol])r.pathname=t.pathname;else{for(var d=(t.pathname||"").split("/");d.length&&!(t.host=d.shift()););t.host||(t.host=""),t.hostname||(t.hostname=""),""!==d[0]&&d.unshift(""),d.length<2&&d.unshift(""),r.pathname=d.join("/")}if(r.search=t.search,r.query=t.query,r.host=t.host||"",r.auth=t.auth,r.hostname=t.hostname||t.host,r.port=t.port,r.pathname||r.search){var y=r.pathname||"",b=r.search||"";r.path=y+b}return r.slashes=r.slashes||t.slashes,r.href=r.format(),r}var E=r.pathname&&"/"===r.pathname.charAt(0),w=t.host||t.pathname&&"/"===t.pathname.charAt(0),O=w||E||r.host&&t.pathname,g=O,_=r.pathname&&r.pathname.split("/")||[],j=(d=t.pathname&&t.pathname.split("/")||[],r.protocol&&!m[r.protocol]);if(j&&(r.hostname="",r.port=null,r.host&&(""===_[0]?_[0]=r.host:_.unshift(r.host)),r.host="",t.protocol&&(t.hostname=null,t.port=null,t.host&&(""===d[0]?d[0]=t.host:d.unshift(t.host)),t.host=null),O=O&&(""===d[0]||""===_[0])),w)r.host=t.host||""===t.host?t.host:r.host,r.hostname=t.hostname||""===t.hostname?t.hostname:r.hostname,r.search=t.search,r.query=t.query,_=d;else if(d.length)_||(_=[]),_.pop(),_=_.concat(d),r.search=t.search,r.query=t.query;else if(!o.isNullOrUndefined(t.search)){if(j)r.hostname=r.host=_.shift(),(A=!!(r.host&&r.host.indexOf("@")>0)&&r.host.split("@"))&&(r.auth=A.shift(),r.host=r.hostname=A.shift());return r.search=t.search,r.query=t.query,o.isNull(r.pathname)&&o.isNull(r.search)||(r.path=(r.pathname?r.pathname:"")+(r.search?r.search:"")),r.href=r.format(),r}if(!_.length)return r.pathname=null,r.search?r.path="/"+r.search:r.path=null,r.href=r.format(),r;for(var R=_.slice(-1)[0],P=(r.host||t.host||_.length>1)&&("."===R||".."===R)||""===R,x=0,S=_.length;S>=0;S--)"."===(R=_[S])?_.splice(S,1):".."===R?(_.splice(S,1),x++):x&&(_.splice(S,1),x--);if(!O&&!g)for(;x--;x)_.unshift("..");!O||""===_[0]||_[0]&&"/"===_[0].charAt(0)||_.unshift(""),P&&"/"!==_.join("/").substr(-1)&&_.push("");var A,T=""===_[0]||_[0]&&"/"===_[0].charAt(0);j&&(r.hostname=r.host=T?"":_.length?_.shift():"",(A=!!(r.host&&r.host.indexOf("@")>0)&&r.host.split("@"))&&(r.auth=A.shift(),r.host=r.hostname=A.shift()));return(O=O||r.host&&_.length)&&!T&&_.unshift(""),_.length?r.pathname=_.join("/"):(r.pathname=null,r.path=null),o.isNull(r.pathname)&&o.isNull(r.search)||(r.path=(r.pathname?r.pathname:"")+(r.search?r.search:"")),r.auth=t.auth||r.auth,r.slashes=r.slashes||t.slashes,r.href=r.format(),r},s.prototype.parseHost=function(){var t=this.host,e=a.exec(t);e&&(":"!==(e=e[0])&&(this.port=e.substr(1)),t=t.substr(0,t.length-e.length)),t&&(this.hostname=t)}},function(t,e,r){"use strict";var n,o=this&&this.__extends||(n=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(t,e){t.__proto__=e}||function(t,e){for(var r in e)e.hasOwnProperty(r)&&(t[r]=e[r])},function(t,e){function r(){this.constructor=t}n(t,e),t.prototype=null===e?Object.create(e):(r.prototype=e.prototype,new r)}),s=this&&this.__assign||Object.assign||function(t){for(var e,r=1,n=arguments.length;r<n;r++)for(var o in e=arguments[r])Object.prototype.hasOwnProperty.call(e,o)&&(t[o]=e[o]);return t},i=this&&this.__awaiter||function(t,e,r,n){return new(r||(r=Promise))(function(o,s){function i(t){try{h(n.next(t))}catch(t){s(t)}}function a(t){try{h(n.throw(t))}catch(t){s(t)}}function h(t){t.done?o(t.value):new r(function(e){e(t.value)}).then(i,a)}h((n=n.apply(t,e||[])).next())})},a=this&&this.__generator||function(t,e){var r,n,o,s,i={label:0,sent:function(){if(1&o[0])throw o[1];return o[1]},trys:[],ops:[]};return s={next:a(0),throw:a(1),return:a(2)},"function"==typeof Symbol&&(s[Symbol.iterator]=function(){return this}),s;function a(s){return function(a){return function(s){if(r)throw new TypeError("Generator is already executing.");for(;i;)try{if(r=1,n&&(o=n[2&s[0]?"return":s[0]?"throw":"next"])&&!(o=o.call(n,s[1])).done)return o;switch(n=0,o&&(s=[0,o.value]),s[0]){case 0:case 1:o=s;break;case 4:return i.label++,{value:s[1],done:!1};case 5:i.label++,n=s[1],s=[0];continue;case 7:s=i.ops.pop(),i.trys.pop();continue;default:if(!(o=(o=i.trys).length>0&&o[o.length-1])&&(6===s[0]||2===s[0])){i=0;continue}if(3===s[0]&&(!o||s[1]>o[0]&&s[1]<o[3])){i.label=s[1];break}if(6===s[0]&&i.label<o[1]){i.label=o[1],o=s;break}if(o&&i.label<o[2]){i.label=o[2],i.ops.push(s);break}o[2]&&i.ops.pop(),i.trys.pop();continue}s=e.call(t,i)}catch(t){s=[6,t],n=0}finally{r=o=0}if(5&s[0])throw s[1];return{value:s[0]?s[1]:void 0,done:!0}}([s,a])}}};Object.defineProperty(e,"__esModule",{value:!0});var h,u=r(6),c=r(5),p=r(1),l=r(4),f=r(16),d=r(15),y=r(3),v=r(13),m=r(12),b=r(2),E=new b.MockError("This feature hasn't been implmented yet. Please submit an Issue or Pull Request on Github."),w=["CONNECT","TRACE","TRACK"],O="undefined"!=typeof URLSearchParams;function g(t){var e=t.header("content-length"),r=t.body(),n=!1,o=0;if(e){var s=parseInt(e,10);NaN!==s&&(n=!0,o=s)}return{lengthComputable:n,loaded:r&&r.length||0,total:o}}!function(t){t[t.UNSENT=0]="UNSENT",t[t.OPENED=1]="OPENED",t[t.HEADERS_RECEIVED=2]="HEADERS_RECEIVED",t[t.LOADING=3]="LOADING",t[t.DONE=4]="DONE"}(h=e.ReadyState||(e.ReadyState={}));var _=function(t){function e(){var r=null!==t&&t.apply(this,arguments)||this;return r.UNSENT=h.UNSENT,r.OPENED=h.OPENED,r.HEADERS_RECEIVED=h.HEADERS_RECEIVED,r.LOADING=h.LOADING,r.DONE=h.DONE,r.withCredentials=!1,r.req=new c.default,r.res=new p.default,r.responseType="",r.responseURL="",r._timeout=0,r.upload=new d.default,r.readyState=e.UNSENT,r.isSynchronous=!1,r.isSending=!1,r.isUploadComplete=!1,r.isAborted=!1,r.isTimedOut=!1,r}return o(e,t),e.addHandler=function(t){this.handlers.push(t)},e.removeHandler=function(t){throw E},e.removeAllHandlers=function(){this.handlers=[]},Object.defineProperty(e.prototype,"timeout",{get:function(){return this._timeout},set:function(t){if(0!==t&&this.isSynchronous)throw new b.MockError("Timeouts cannot be set for synchronous requests made from a document.");this._timeout=t},enumerable:!0,configurable:!0}),Object.defineProperty(e.prototype,"response",{get:function(){if(""===this.responseType||"text"===this.responseType)return this.readyState!==this.LOADING&&this.readyState!==this.DONE?"":this.responseText;if(this.readyState!==this.DONE)return null;var t=this.res.body();if(!t)return null;if("json"===this.responseType&&"string"==typeof t)try{return JSON.parse(this.responseText)}catch(t){return null}if("blob"===this.responseType&&"string"==typeof t)try{throw E}catch(t){return null}if("arraybuffer"===this.responseType&&"string"==typeof t)try{throw E}catch(t){return null}if("document"===this.responseType&&"string"==typeof t)try{throw E}catch(t){return null}return t},enumerable:!0,configurable:!0}),Object.defineProperty(e.prototype,"responseText",{get:function(){return this.res.body()||""},enumerable:!0,configurable:!0}),Object.defineProperty(e.prototype,"responseXML",{get:function(){throw E},enumerable:!0,configurable:!0}),Object.defineProperty(e.prototype,"status",{get:function(){return this.res.status()},enumerable:!0,configurable:!0}),Object.defineProperty(e.prototype,"statusText",{get:function(){return this.res.reason()},enumerable:!0,configurable:!0}),e.prototype.getAllResponseHeaders=function(){var t=this.res.headers();return Object.keys(t).map(function(e){return e+": "+t[e]+"\r\n"}).join("")},e.prototype.getResponseHeader=function(t){return this.readyState<e.HEADERS_RECEIVED?null:this.res.header(t)},e.prototype.setRequestHeader=function(t,r){if(this.readyState<e.OPENED)throw new b.MockError("xhr must be OPENED.");this.req.header(t,r)},e.prototype.overrideMimeType=function(t){throw E},e.prototype.open=function(t,r,n,o,s){if(void 0===n&&(n=!0),void 0===o&&(o=null),void 0===s&&(s=null),-1!==w.indexOf(t))throw new b.MockError("Method "+t+" is forbidden.");t=t.toUpperCase();var i=u.parseURL(r);if(i.username=o||"",i.password=o&&s||"",!n&&(0!==this._timeout||""!==this.responseType))throw new b.MockError("InvalidAccessError");if(this.isSending)throw new b.MockError("Unable to terminate the previous request");this.isSending=!1,this.isSynchronous=!n,this.req.method(t).headers({}).url(u.formatURL(i)),this.applyNetworkError(),this.readyState!==this.OPENED&&(this.readyState=e.OPENED,this.dispatchEvent(new l.default("readystatechange")))},e.prototype.sendSync=function(){var t;try{t=v.sync(e.handlers,this.req,this.res),this.handleResponseBody(t)}catch(t){e.errorCallback({req:this.req,err:t}),this.handleError(t)}},e.prototype.sendAsync=function(){return i(this,void 0,void 0,function(){var t,r,n,o,i,h=this;return a(this,function(a){switch(a.label){case 0:if(t=this.req,r=g(this.res),this.dispatchEvent(new f.default("loadstart",s({},r,{loaded:0}))),this.isUploadComplete||(n=g(this.req),this.upload.dispatchEvent(new f.default("loadstart",s({},n,{loaded:0})))),this.readyState!==this.OPENED||!this.isSending)return[2];0!==this._timeout&&(this._timeoutTimer=setTimeout(function(){h.isTimedOut=!0,h.handleError()},this._timeout)),a.label=1;case 1:return a.trys.push([1,3,,4]),[4,v.async(e.handlers,this.req,this.res)];case 2:return o=a.sent(),clearTimeout(this._timeoutTimer),this.isAborted||this.isTimedOut?[2]:(this.sendRequest(t),this.receiveResponse(o),[3,4]);case 3:return i=a.sent(),clearTimeout(this._timeoutTimer),this.isAborted||this.isTimedOut?[2]:(e.errorCallback({req:this.req,err:i}),this.handleError(i),[3,4]);case 4:return[2]}})})},e.prototype.applyNetworkError=function(){this.res.status(0).reason("").headers({}).body(null)},e.prototype.reportError=function(t){if(this.readyState=this.DONE,this.isSending=!1,this.applyNetworkError(),this.isSynchronous)throw new b.MockError("An error occurred whilst sending a synchronous request.");if(this.dispatchEvent(new l.default("readystatechange")),!this.isUploadComplete){this.isUploadComplete=!0;var e=g(this.req);this.upload.dispatchEvent(new f.default(t,e)),this.upload.dispatchEvent(new f.default("loadend",e))}var r=g(this.res);this.dispatchEvent(new f.default(t,r)),this.dispatchEvent(new f.default("loadend",r))},e.prototype.sendRequest=function(t){if(!this.isUploadComplete){this.isUploadComplete=!0;var e=g(this.req);this.upload.dispatchEvent(new f.default("progress",e)),this.upload.dispatchEvent(new f.default("load",e)),this.upload.dispatchEvent(new f.default("loadend",e))}},e.prototype.receiveResponse=function(t){this.readyState=this.HEADERS_RECEIVED,this.dispatchEvent(new l.default("readystatechange")),null!==t.body()?(this.readyState=this.LOADING,this.dispatchEvent(new l.default("readystatechange")),this.handleResponseBody(t)):this.handleResponseBody(t)},e.prototype.handleError=function(t){this.isSending&&(this.isTimedOut?this.reportError("timeout"):this.isAborted?this.reportError("abort"):this.reportError("error"))},e.prototype.handleResponseBody=function(t){this.res=t;var e=g(t);this.isSynchronous||this.dispatchEvent(new f.default("progress",e)),this.readyState=this.DONE,this.isSending=!1,this.dispatchEvent(new l.default("readystatechange")),this.dispatchEvent(new f.default("load",e)),this.dispatchEvent(new f.default("loadend",e))},e.prototype.send=function(t){if(this.readyState!==e.OPENED)throw new b.MockError("Please call MockXMLHttpRequest.open() before MockXMLHttpRequest.send().");if(this.isSending)throw new b.MockError("MockXMLHttpRequest.send() has already been called.");var r,n;if("GET"!==this.req.method()&&"HEAD"!==this.req.method()||(t=null),null!==t&&void 0!==t){if(t instanceof Document)r="UTF-8",n=t instanceof XMLDocument?"application/xml":"text/html";else if(t instanceof Blob)n=t.type;else if(t instanceof FormData)n="multipart/form-data; boundary=----XHRMockFormBoundary";else if(O&&t instanceof URLSearchParams)r="UTF-8",n="application/x-www-form-urlencoded";else{if("string"!=typeof t)throw E;r="UTF-8",n="text/plain"}this.req.header("content-type")||this.req.header("content-type",r?n+"; charset="+r:n),this.req.body(t)}this.isUploadComplete=!1,this.isTimedOut=!1,null!==t&&void 0!==t||(this.isUploadComplete=!0),this.isSending=!0,this.isSynchronous?this.sendSync():this.sendAsync()},e.prototype.abort=function(){if(clearTimeout(this._timeoutTimer),this.isAborted=!0,this.readyState!==this.OPENED&&this.readyState!==this.HEADERS_RECEIVED&&this.readyState!==this.LOADING||this.reportError("abort"),this.readyState===this.DONE)return this.readyState=this.UNSENT,void this.applyNetworkError()},e.prototype.msCachingEnabled=function(){return!1},e.UNSENT=h.UNSENT,e.OPENED=h.OPENED,e.HEADERS_RECEIVED=h.HEADERS_RECEIVED,e.LOADING=h.LOADING,e.DONE=h.DONE,e.handlers=[],e.errorCallback=function(t){var e=t.req,r=t.err;r instanceof b.MockError?console.error(m.formatError(r.message,e)):console.error(m.formatError("A handler returned an error for the request.",e,r))},e}(y.default);e.default=_},function(t,e,r){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var n=r(1);e.default=function(t,e,r){return function(o,s){if(function(r){var n=r.method(),o=r.url().toString();return n.toUpperCase()===t.toUpperCase()&&(e instanceof RegExp?(e.lastIndex=0,e.test(o)):o===e)}(o))return"object"==typeof r?(a=(i=r).status,h=i.reason,u=i.headers,c=i.body,p=new n.default,a&&p.status(a),h&&p.reason(h),u&&p.headers(u),c&&p.body(c),p):r(o,s);var i,a,h,u,c,p}}},function(t,e,r){(function(e){var r;r="undefined"!=typeof window?window:void 0!==e?e:"undefined"!=typeof self?self:{},t.exports=r}).call(this,r(7))},function(t,e,r){"use strict";r.r(e);var n=r(0),o=r.n(n);const s=({mockURL:t,status:e,response:r,delay:n})=>{o.a.teardown(),o.a.setup();const s=(t,o)=>{const s=r;return new Promise((t,r)=>{setTimeout(()=>{t(o.status(e).headers({"Content-Type":"application/json"}).body(s))},n)})};o.a.get(t,s),o.a.post(t,s),o.a.put(t,s),o.a.patch(t,s),o.a.delete(t,s)};addEventListener("message",t=>{"xhr-mock-api-message"===t.data.id&&s(t.data)},!1),document.getElementById("xhrMockApi").removeAttribute("src")}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/broswer/xhr-mock.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./node_modules/global/window.js":
+/*!***************************************!*\
+  !*** ./node_modules/global/window.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {var win;
+
+if (typeof window !== "undefined") {
+    win = window;
+} else if (typeof global !== "undefined") {
+    win = global;
+} else if (typeof self !== "undefined"){
+    win = self;
+} else {
+    win = {};
+}
+
+module.exports = win;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/punycode/punycode.js":
+/*!*******************************************!*\
+  !*** ./node_modules/punycode/punycode.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.4.1 by @mathias */
+;(function(root) {
+
+	/** Detect free variables */
+	var freeExports = typeof exports == 'object' && exports &&
+		!exports.nodeType && exports;
+	var freeModule = typeof module == 'object' && module &&
+		!module.nodeType && module;
+	var freeGlobal = typeof global == 'object' && global;
+	if (
+		freeGlobal.global === freeGlobal ||
+		freeGlobal.window === freeGlobal ||
+		freeGlobal.self === freeGlobal
+	) {
+		root = freeGlobal;
+	}
+
+	/**
+	 * The `punycode` object.
+	 * @name punycode
+	 * @type Object
+	 */
+	var punycode,
+
+	/** Highest positive signed 32-bit float value */
+	maxInt = 2147483647, // aka. 0x7FFFFFFF or 2^31-1
+
+	/** Bootstring parameters */
+	base = 36,
+	tMin = 1,
+	tMax = 26,
+	skew = 38,
+	damp = 700,
+	initialBias = 72,
+	initialN = 128, // 0x80
+	delimiter = '-', // '\x2D'
+
+	/** Regular expressions */
+	regexPunycode = /^xn--/,
+	regexNonASCII = /[^\x20-\x7E]/, // unprintable ASCII chars + non-ASCII chars
+	regexSeparators = /[\x2E\u3002\uFF0E\uFF61]/g, // RFC 3490 separators
+
+	/** Error messages */
+	errors = {
+		'overflow': 'Overflow: input needs wider integers to process',
+		'not-basic': 'Illegal input >= 0x80 (not a basic code point)',
+		'invalid-input': 'Invalid input'
+	},
+
+	/** Convenience shortcuts */
+	baseMinusTMin = base - tMin,
+	floor = Math.floor,
+	stringFromCharCode = String.fromCharCode,
+
+	/** Temporary variable */
+	key;
+
+	/*--------------------------------------------------------------------------*/
+
+	/**
+	 * A generic error utility function.
+	 * @private
+	 * @param {String} type The error type.
+	 * @returns {Error} Throws a `RangeError` with the applicable error message.
+	 */
+	function error(type) {
+		throw new RangeError(errors[type]);
+	}
+
+	/**
+	 * A generic `Array#map` utility function.
+	 * @private
+	 * @param {Array} array The array to iterate over.
+	 * @param {Function} callback The function that gets called for every array
+	 * item.
+	 * @returns {Array} A new array of values returned by the callback function.
+	 */
+	function map(array, fn) {
+		var length = array.length;
+		var result = [];
+		while (length--) {
+			result[length] = fn(array[length]);
+		}
+		return result;
+	}
+
+	/**
+	 * A simple `Array#map`-like wrapper to work with domain name strings or email
+	 * addresses.
+	 * @private
+	 * @param {String} domain The domain name or email address.
+	 * @param {Function} callback The function that gets called for every
+	 * character.
+	 * @returns {Array} A new string of characters returned by the callback
+	 * function.
+	 */
+	function mapDomain(string, fn) {
+		var parts = string.split('@');
+		var result = '';
+		if (parts.length > 1) {
+			// In email addresses, only the domain name should be punycoded. Leave
+			// the local part (i.e. everything up to `@`) intact.
+			result = parts[0] + '@';
+			string = parts[1];
+		}
+		// Avoid `split(regex)` for IE8 compatibility. See #17.
+		string = string.replace(regexSeparators, '\x2E');
+		var labels = string.split('.');
+		var encoded = map(labels, fn).join('.');
+		return result + encoded;
+	}
+
+	/**
+	 * Creates an array containing the numeric code points of each Unicode
+	 * character in the string. While JavaScript uses UCS-2 internally,
+	 * this function will convert a pair of surrogate halves (each of which
+	 * UCS-2 exposes as separate characters) into a single code point,
+	 * matching UTF-16.
+	 * @see `punycode.ucs2.encode`
+	 * @see <https://mathiasbynens.be/notes/javascript-encoding>
+	 * @memberOf punycode.ucs2
+	 * @name decode
+	 * @param {String} string The Unicode input string (UCS-2).
+	 * @returns {Array} The new array of code points.
+	 */
+	function ucs2decode(string) {
+		var output = [],
+		    counter = 0,
+		    length = string.length,
+		    value,
+		    extra;
+		while (counter < length) {
+			value = string.charCodeAt(counter++);
+			if (value >= 0xD800 && value <= 0xDBFF && counter < length) {
+				// high surrogate, and there is a next character
+				extra = string.charCodeAt(counter++);
+				if ((extra & 0xFC00) == 0xDC00) { // low surrogate
+					output.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
+				} else {
+					// unmatched surrogate; only append this code unit, in case the next
+					// code unit is the high surrogate of a surrogate pair
+					output.push(value);
+					counter--;
+				}
+			} else {
+				output.push(value);
+			}
+		}
+		return output;
+	}
+
+	/**
+	 * Creates a string based on an array of numeric code points.
+	 * @see `punycode.ucs2.decode`
+	 * @memberOf punycode.ucs2
+	 * @name encode
+	 * @param {Array} codePoints The array of numeric code points.
+	 * @returns {String} The new Unicode string (UCS-2).
+	 */
+	function ucs2encode(array) {
+		return map(array, function(value) {
+			var output = '';
+			if (value > 0xFFFF) {
+				value -= 0x10000;
+				output += stringFromCharCode(value >>> 10 & 0x3FF | 0xD800);
+				value = 0xDC00 | value & 0x3FF;
+			}
+			output += stringFromCharCode(value);
+			return output;
+		}).join('');
+	}
+
+	/**
+	 * Converts a basic code point into a digit/integer.
+	 * @see `digitToBasic()`
+	 * @private
+	 * @param {Number} codePoint The basic numeric code point value.
+	 * @returns {Number} The numeric value of a basic code point (for use in
+	 * representing integers) in the range `0` to `base - 1`, or `base` if
+	 * the code point does not represent a value.
+	 */
+	function basicToDigit(codePoint) {
+		if (codePoint - 48 < 10) {
+			return codePoint - 22;
+		}
+		if (codePoint - 65 < 26) {
+			return codePoint - 65;
+		}
+		if (codePoint - 97 < 26) {
+			return codePoint - 97;
+		}
+		return base;
+	}
+
+	/**
+	 * Converts a digit/integer into a basic code point.
+	 * @see `basicToDigit()`
+	 * @private
+	 * @param {Number} digit The numeric value of a basic code point.
+	 * @returns {Number} The basic code point whose value (when used for
+	 * representing integers) is `digit`, which needs to be in the range
+	 * `0` to `base - 1`. If `flag` is non-zero, the uppercase form is
+	 * used; else, the lowercase form is used. The behavior is undefined
+	 * if `flag` is non-zero and `digit` has no uppercase form.
+	 */
+	function digitToBasic(digit, flag) {
+		//  0..25 map to ASCII a..z or A..Z
+		// 26..35 map to ASCII 0..9
+		return digit + 22 + 75 * (digit < 26) - ((flag != 0) << 5);
+	}
+
+	/**
+	 * Bias adaptation function as per section 3.4 of RFC 3492.
+	 * https://tools.ietf.org/html/rfc3492#section-3.4
+	 * @private
+	 */
+	function adapt(delta, numPoints, firstTime) {
+		var k = 0;
+		delta = firstTime ? floor(delta / damp) : delta >> 1;
+		delta += floor(delta / numPoints);
+		for (/* no initialization */; delta > baseMinusTMin * tMax >> 1; k += base) {
+			delta = floor(delta / baseMinusTMin);
+		}
+		return floor(k + (baseMinusTMin + 1) * delta / (delta + skew));
+	}
+
+	/**
+	 * Converts a Punycode string of ASCII-only symbols to a string of Unicode
+	 * symbols.
+	 * @memberOf punycode
+	 * @param {String} input The Punycode string of ASCII-only symbols.
+	 * @returns {String} The resulting string of Unicode symbols.
+	 */
+	function decode(input) {
+		// Don't use UCS-2
+		var output = [],
+		    inputLength = input.length,
+		    out,
+		    i = 0,
+		    n = initialN,
+		    bias = initialBias,
+		    basic,
+		    j,
+		    index,
+		    oldi,
+		    w,
+		    k,
+		    digit,
+		    t,
+		    /** Cached calculation results */
+		    baseMinusT;
+
+		// Handle the basic code points: let `basic` be the number of input code
+		// points before the last delimiter, or `0` if there is none, then copy
+		// the first basic code points to the output.
+
+		basic = input.lastIndexOf(delimiter);
+		if (basic < 0) {
+			basic = 0;
+		}
+
+		for (j = 0; j < basic; ++j) {
+			// if it's not a basic code point
+			if (input.charCodeAt(j) >= 0x80) {
+				error('not-basic');
+			}
+			output.push(input.charCodeAt(j));
+		}
+
+		// Main decoding loop: start just after the last delimiter if any basic code
+		// points were copied; start at the beginning otherwise.
+
+		for (index = basic > 0 ? basic + 1 : 0; index < inputLength; /* no final expression */) {
+
+			// `index` is the index of the next character to be consumed.
+			// Decode a generalized variable-length integer into `delta`,
+			// which gets added to `i`. The overflow checking is easier
+			// if we increase `i` as we go, then subtract off its starting
+			// value at the end to obtain `delta`.
+			for (oldi = i, w = 1, k = base; /* no condition */; k += base) {
+
+				if (index >= inputLength) {
+					error('invalid-input');
+				}
+
+				digit = basicToDigit(input.charCodeAt(index++));
+
+				if (digit >= base || digit > floor((maxInt - i) / w)) {
+					error('overflow');
+				}
+
+				i += digit * w;
+				t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
+
+				if (digit < t) {
+					break;
+				}
+
+				baseMinusT = base - t;
+				if (w > floor(maxInt / baseMinusT)) {
+					error('overflow');
+				}
+
+				w *= baseMinusT;
+
+			}
+
+			out = output.length + 1;
+			bias = adapt(i - oldi, out, oldi == 0);
+
+			// `i` was supposed to wrap around from `out` to `0`,
+			// incrementing `n` each time, so we'll fix that now:
+			if (floor(i / out) > maxInt - n) {
+				error('overflow');
+			}
+
+			n += floor(i / out);
+			i %= out;
+
+			// Insert `n` at position `i` of the output
+			output.splice(i++, 0, n);
+
+		}
+
+		return ucs2encode(output);
+	}
+
+	/**
+	 * Converts a string of Unicode symbols (e.g. a domain name label) to a
+	 * Punycode string of ASCII-only symbols.
+	 * @memberOf punycode
+	 * @param {String} input The string of Unicode symbols.
+	 * @returns {String} The resulting Punycode string of ASCII-only symbols.
+	 */
+	function encode(input) {
+		var n,
+		    delta,
+		    handledCPCount,
+		    basicLength,
+		    bias,
+		    j,
+		    m,
+		    q,
+		    k,
+		    t,
+		    currentValue,
+		    output = [],
+		    /** `inputLength` will hold the number of code points in `input`. */
+		    inputLength,
+		    /** Cached calculation results */
+		    handledCPCountPlusOne,
+		    baseMinusT,
+		    qMinusT;
+
+		// Convert the input in UCS-2 to Unicode
+		input = ucs2decode(input);
+
+		// Cache the length
+		inputLength = input.length;
+
+		// Initialize the state
+		n = initialN;
+		delta = 0;
+		bias = initialBias;
+
+		// Handle the basic code points
+		for (j = 0; j < inputLength; ++j) {
+			currentValue = input[j];
+			if (currentValue < 0x80) {
+				output.push(stringFromCharCode(currentValue));
+			}
+		}
+
+		handledCPCount = basicLength = output.length;
+
+		// `handledCPCount` is the number of code points that have been handled;
+		// `basicLength` is the number of basic code points.
+
+		// Finish the basic string - if it is not empty - with a delimiter
+		if (basicLength) {
+			output.push(delimiter);
+		}
+
+		// Main encoding loop:
+		while (handledCPCount < inputLength) {
+
+			// All non-basic code points < n have been handled already. Find the next
+			// larger one:
+			for (m = maxInt, j = 0; j < inputLength; ++j) {
+				currentValue = input[j];
+				if (currentValue >= n && currentValue < m) {
+					m = currentValue;
+				}
+			}
+
+			// Increase `delta` enough to advance the decoder's <n,i> state to <m,0>,
+			// but guard against overflow
+			handledCPCountPlusOne = handledCPCount + 1;
+			if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) {
+				error('overflow');
+			}
+
+			delta += (m - n) * handledCPCountPlusOne;
+			n = m;
+
+			for (j = 0; j < inputLength; ++j) {
+				currentValue = input[j];
+
+				if (currentValue < n && ++delta > maxInt) {
+					error('overflow');
+				}
+
+				if (currentValue == n) {
+					// Represent delta as a generalized variable-length integer
+					for (q = delta, k = base; /* no condition */; k += base) {
+						t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
+						if (q < t) {
+							break;
+						}
+						qMinusT = q - t;
+						baseMinusT = base - t;
+						output.push(
+							stringFromCharCode(digitToBasic(t + qMinusT % baseMinusT, 0))
+						);
+						q = floor(qMinusT / baseMinusT);
+					}
+
+					output.push(stringFromCharCode(digitToBasic(q, 0)));
+					bias = adapt(delta, handledCPCountPlusOne, handledCPCount == basicLength);
+					delta = 0;
+					++handledCPCount;
+				}
+			}
+
+			++delta;
+			++n;
+
+		}
+		return output.join('');
+	}
+
+	/**
+	 * Converts a Punycode string representing a domain name or an email address
+	 * to Unicode. Only the Punycoded parts of the input will be converted, i.e.
+	 * it doesn't matter if you call it on a string that has already been
+	 * converted to Unicode.
+	 * @memberOf punycode
+	 * @param {String} input The Punycoded domain name or email address to
+	 * convert to Unicode.
+	 * @returns {String} The Unicode representation of the given Punycode
+	 * string.
+	 */
+	function toUnicode(input) {
+		return mapDomain(input, function(string) {
+			return regexPunycode.test(string)
+				? decode(string.slice(4).toLowerCase())
+				: string;
+		});
+	}
+
+	/**
+	 * Converts a Unicode string representing a domain name or an email address to
+	 * Punycode. Only the non-ASCII parts of the domain name will be converted,
+	 * i.e. it doesn't matter if you call it with a domain that's already in
+	 * ASCII.
+	 * @memberOf punycode
+	 * @param {String} input The domain name or email address to convert, as a
+	 * Unicode string.
+	 * @returns {String} The Punycode representation of the given domain name or
+	 * email address.
+	 */
+	function toASCII(input) {
+		return mapDomain(input, function(string) {
+			return regexNonASCII.test(string)
+				? 'xn--' + encode(string)
+				: string;
+		});
+	}
+
+	/*--------------------------------------------------------------------------*/
+
+	/** Define the public API */
+	punycode = {
+		/**
+		 * A string representing the current Punycode.js version number.
+		 * @memberOf punycode
+		 * @type String
+		 */
+		'version': '1.4.1',
+		/**
+		 * An object of methods to convert from JavaScript's internal character
+		 * representation (UCS-2) to Unicode code points, and back.
+		 * @see <https://mathiasbynens.be/notes/javascript-encoding>
+		 * @memberOf punycode
+		 * @type Object
+		 */
+		'ucs2': {
+			'decode': ucs2decode,
+			'encode': ucs2encode
+		},
+		'decode': decode,
+		'encode': encode,
+		'toASCII': toASCII,
+		'toUnicode': toUnicode
+	};
+
+	/** Expose `punycode` */
+	// Some AMD build optimizers, like r.js, check for specific condition patterns
+	// like the following:
+	if (
+		true
+	) {
+		!(__WEBPACK_AMD_DEFINE_RESULT__ = (function() {
+			return punycode;
+		}).call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {}
+
+}(this));
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module), __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/querystring-es3/decode.js":
+/*!************************************************!*\
+  !*** ./node_modules/querystring-es3/decode.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+// If obj.hasOwnProperty has been overridden, then calling
+// obj.hasOwnProperty(prop) will break.
+// See: https://github.com/joyent/node/issues/1707
+function hasOwnProperty(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+
+module.exports = function(qs, sep, eq, options) {
+  sep = sep || '&';
+  eq = eq || '=';
+  var obj = {};
+
+  if (typeof qs !== 'string' || qs.length === 0) {
+    return obj;
+  }
+
+  var regexp = /\+/g;
+  qs = qs.split(sep);
+
+  var maxKeys = 1000;
+  if (options && typeof options.maxKeys === 'number') {
+    maxKeys = options.maxKeys;
+  }
+
+  var len = qs.length;
+  // maxKeys <= 0 means that we should not limit keys count
+  if (maxKeys > 0 && len > maxKeys) {
+    len = maxKeys;
+  }
+
+  for (var i = 0; i < len; ++i) {
+    var x = qs[i].replace(regexp, '%20'),
+        idx = x.indexOf(eq),
+        kstr, vstr, k, v;
+
+    if (idx >= 0) {
+      kstr = x.substr(0, idx);
+      vstr = x.substr(idx + 1);
+    } else {
+      kstr = x;
+      vstr = '';
+    }
+
+    k = decodeURIComponent(kstr);
+    v = decodeURIComponent(vstr);
+
+    if (!hasOwnProperty(obj, k)) {
+      obj[k] = v;
+    } else if (isArray(obj[k])) {
+      obj[k].push(v);
+    } else {
+      obj[k] = [obj[k], v];
+    }
+  }
+
+  return obj;
+};
+
+var isArray = Array.isArray || function (xs) {
+  return Object.prototype.toString.call(xs) === '[object Array]';
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/querystring-es3/encode.js":
+/*!************************************************!*\
+  !*** ./node_modules/querystring-es3/encode.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+var stringifyPrimitive = function(v) {
+  switch (typeof v) {
+    case 'string':
+      return v;
+
+    case 'boolean':
+      return v ? 'true' : 'false';
+
+    case 'number':
+      return isFinite(v) ? v : '';
+
+    default:
+      return '';
+  }
+};
+
+module.exports = function(obj, sep, eq, name) {
+  sep = sep || '&';
+  eq = eq || '=';
+  if (obj === null) {
+    obj = undefined;
+  }
+
+  if (typeof obj === 'object') {
+    return map(objectKeys(obj), function(k) {
+      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
+      if (isArray(obj[k])) {
+        return map(obj[k], function(v) {
+          return ks + encodeURIComponent(stringifyPrimitive(v));
+        }).join(sep);
+      } else {
+        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
+      }
+    }).join(sep);
+
+  }
+
+  if (!name) return '';
+  return encodeURIComponent(stringifyPrimitive(name)) + eq +
+         encodeURIComponent(stringifyPrimitive(obj));
+};
+
+var isArray = Array.isArray || function (xs) {
+  return Object.prototype.toString.call(xs) === '[object Array]';
+};
+
+function map (xs, f) {
+  if (xs.map) return xs.map(f);
+  var res = [];
+  for (var i = 0; i < xs.length; i++) {
+    res.push(f(xs[i], i));
+  }
+  return res;
+}
+
+var objectKeys = Object.keys || function (obj) {
+  var res = [];
+  for (var key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) res.push(key);
+  }
+  return res;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/querystring-es3/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/querystring-es3/index.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.decode = exports.parse = __webpack_require__(/*! ./decode */ "./node_modules/querystring-es3/decode.js");
+exports.encode = exports.stringify = __webpack_require__(/*! ./encode */ "./node_modules/querystring-es3/encode.js");
+
+
+/***/ }),
+
+/***/ "./node_modules/url/url.js":
+/*!*********************************!*\
+  !*** ./node_modules/url/url.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+var punycode = __webpack_require__(/*! punycode */ "./node_modules/punycode/punycode.js");
+var util = __webpack_require__(/*! ./util */ "./node_modules/url/util.js");
+
+exports.parse = urlParse;
+exports.resolve = urlResolve;
+exports.resolveObject = urlResolveObject;
+exports.format = urlFormat;
+
+exports.Url = Url;
+
+function Url() {
+  this.protocol = null;
+  this.slashes = null;
+  this.auth = null;
+  this.host = null;
+  this.port = null;
+  this.hostname = null;
+  this.hash = null;
+  this.search = null;
+  this.query = null;
+  this.pathname = null;
+  this.path = null;
+  this.href = null;
+}
+
+// Reference: RFC 3986, RFC 1808, RFC 2396
+
+// define these here so at least they only have to be
+// compiled once on the first module load.
+var protocolPattern = /^([a-z0-9.+-]+:)/i,
+    portPattern = /:[0-9]*$/,
+
+    // Special case for a simple path URL
+    simplePathPattern = /^(\/\/?(?!\/)[^\?\s]*)(\?[^\s]*)?$/,
+
+    // RFC 2396: characters reserved for delimiting URLs.
+    // We actually just auto-escape these.
+    delims = ['<', '>', '"', '`', ' ', '\r', '\n', '\t'],
+
+    // RFC 2396: characters not allowed for various reasons.
+    unwise = ['{', '}', '|', '\\', '^', '`'].concat(delims),
+
+    // Allowed by RFCs, but cause of XSS attacks.  Always escape these.
+    autoEscape = ['\''].concat(unwise),
+    // Characters that are never ever allowed in a hostname.
+    // Note that any invalid chars are also handled, but these
+    // are the ones that are *expected* to be seen, so we fast-path
+    // them.
+    nonHostChars = ['%', '/', '?', ';', '#'].concat(autoEscape),
+    hostEndingChars = ['/', '?', '#'],
+    hostnameMaxLen = 255,
+    hostnamePartPattern = /^[+a-z0-9A-Z_-]{0,63}$/,
+    hostnamePartStart = /^([+a-z0-9A-Z_-]{0,63})(.*)$/,
+    // protocols that can allow "unsafe" and "unwise" chars.
+    unsafeProtocol = {
+      'javascript': true,
+      'javascript:': true
+    },
+    // protocols that never have a hostname.
+    hostlessProtocol = {
+      'javascript': true,
+      'javascript:': true
+    },
+    // protocols that always contain a // bit.
+    slashedProtocol = {
+      'http': true,
+      'https': true,
+      'ftp': true,
+      'gopher': true,
+      'file': true,
+      'http:': true,
+      'https:': true,
+      'ftp:': true,
+      'gopher:': true,
+      'file:': true
+    },
+    querystring = __webpack_require__(/*! querystring */ "./node_modules/querystring-es3/index.js");
+
+function urlParse(url, parseQueryString, slashesDenoteHost) {
+  if (url && util.isObject(url) && url instanceof Url) return url;
+
+  var u = new Url;
+  u.parse(url, parseQueryString, slashesDenoteHost);
+  return u;
+}
+
+Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
+  if (!util.isString(url)) {
+    throw new TypeError("Parameter 'url' must be a string, not " + typeof url);
+  }
+
+  // Copy chrome, IE, opera backslash-handling behavior.
+  // Back slashes before the query string get converted to forward slashes
+  // See: https://code.google.com/p/chromium/issues/detail?id=25916
+  var queryIndex = url.indexOf('?'),
+      splitter =
+          (queryIndex !== -1 && queryIndex < url.indexOf('#')) ? '?' : '#',
+      uSplit = url.split(splitter),
+      slashRegex = /\\/g;
+  uSplit[0] = uSplit[0].replace(slashRegex, '/');
+  url = uSplit.join(splitter);
+
+  var rest = url;
+
+  // trim before proceeding.
+  // This is to support parse stuff like "  http://foo.com  \n"
+  rest = rest.trim();
+
+  if (!slashesDenoteHost && url.split('#').length === 1) {
+    // Try fast path regexp
+    var simplePath = simplePathPattern.exec(rest);
+    if (simplePath) {
+      this.path = rest;
+      this.href = rest;
+      this.pathname = simplePath[1];
+      if (simplePath[2]) {
+        this.search = simplePath[2];
+        if (parseQueryString) {
+          this.query = querystring.parse(this.search.substr(1));
+        } else {
+          this.query = this.search.substr(1);
+        }
+      } else if (parseQueryString) {
+        this.search = '';
+        this.query = {};
+      }
+      return this;
+    }
+  }
+
+  var proto = protocolPattern.exec(rest);
+  if (proto) {
+    proto = proto[0];
+    var lowerProto = proto.toLowerCase();
+    this.protocol = lowerProto;
+    rest = rest.substr(proto.length);
+  }
+
+  // figure out if it's got a host
+  // user@server is *always* interpreted as a hostname, and url
+  // resolution will treat //foo/bar as host=foo,path=bar because that's
+  // how the browser resolves relative URLs.
+  if (slashesDenoteHost || proto || rest.match(/^\/\/[^@\/]+@[^@\/]+/)) {
+    var slashes = rest.substr(0, 2) === '//';
+    if (slashes && !(proto && hostlessProtocol[proto])) {
+      rest = rest.substr(2);
+      this.slashes = true;
+    }
+  }
+
+  if (!hostlessProtocol[proto] &&
+      (slashes || (proto && !slashedProtocol[proto]))) {
+
+    // there's a hostname.
+    // the first instance of /, ?, ;, or # ends the host.
+    //
+    // If there is an @ in the hostname, then non-host chars *are* allowed
+    // to the left of the last @ sign, unless some host-ending character
+    // comes *before* the @-sign.
+    // URLs are obnoxious.
+    //
+    // ex:
+    // http://a@b@c/ => user:a@b host:c
+    // http://a@b?@c => user:a host:c path:/?@c
+
+    // v0.12 TODO(isaacs): This is not quite how Chrome does things.
+    // Review our test case against browsers more comprehensively.
+
+    // find the first instance of any hostEndingChars
+    var hostEnd = -1;
+    for (var i = 0; i < hostEndingChars.length; i++) {
+      var hec = rest.indexOf(hostEndingChars[i]);
+      if (hec !== -1 && (hostEnd === -1 || hec < hostEnd))
+        hostEnd = hec;
+    }
+
+    // at this point, either we have an explicit point where the
+    // auth portion cannot go past, or the last @ char is the decider.
+    var auth, atSign;
+    if (hostEnd === -1) {
+      // atSign can be anywhere.
+      atSign = rest.lastIndexOf('@');
+    } else {
+      // atSign must be in auth portion.
+      // http://a@b/c@d => host:b auth:a path:/c@d
+      atSign = rest.lastIndexOf('@', hostEnd);
+    }
+
+    // Now we have a portion which is definitely the auth.
+    // Pull that off.
+    if (atSign !== -1) {
+      auth = rest.slice(0, atSign);
+      rest = rest.slice(atSign + 1);
+      this.auth = decodeURIComponent(auth);
+    }
+
+    // the host is the remaining to the left of the first non-host char
+    hostEnd = -1;
+    for (var i = 0; i < nonHostChars.length; i++) {
+      var hec = rest.indexOf(nonHostChars[i]);
+      if (hec !== -1 && (hostEnd === -1 || hec < hostEnd))
+        hostEnd = hec;
+    }
+    // if we still have not hit it, then the entire thing is a host.
+    if (hostEnd === -1)
+      hostEnd = rest.length;
+
+    this.host = rest.slice(0, hostEnd);
+    rest = rest.slice(hostEnd);
+
+    // pull out port.
+    this.parseHost();
+
+    // we've indicated that there is a hostname,
+    // so even if it's empty, it has to be present.
+    this.hostname = this.hostname || '';
+
+    // if hostname begins with [ and ends with ]
+    // assume that it's an IPv6 address.
+    var ipv6Hostname = this.hostname[0] === '[' &&
+        this.hostname[this.hostname.length - 1] === ']';
+
+    // validate a little.
+    if (!ipv6Hostname) {
+      var hostparts = this.hostname.split(/\./);
+      for (var i = 0, l = hostparts.length; i < l; i++) {
+        var part = hostparts[i];
+        if (!part) continue;
+        if (!part.match(hostnamePartPattern)) {
+          var newpart = '';
+          for (var j = 0, k = part.length; j < k; j++) {
+            if (part.charCodeAt(j) > 127) {
+              // we replace non-ASCII char with a temporary placeholder
+              // we need this to make sure size of hostname is not
+              // broken by replacing non-ASCII by nothing
+              newpart += 'x';
+            } else {
+              newpart += part[j];
+            }
+          }
+          // we test again with ASCII char only
+          if (!newpart.match(hostnamePartPattern)) {
+            var validParts = hostparts.slice(0, i);
+            var notHost = hostparts.slice(i + 1);
+            var bit = part.match(hostnamePartStart);
+            if (bit) {
+              validParts.push(bit[1]);
+              notHost.unshift(bit[2]);
+            }
+            if (notHost.length) {
+              rest = '/' + notHost.join('.') + rest;
+            }
+            this.hostname = validParts.join('.');
+            break;
+          }
+        }
+      }
+    }
+
+    if (this.hostname.length > hostnameMaxLen) {
+      this.hostname = '';
+    } else {
+      // hostnames are always lower case.
+      this.hostname = this.hostname.toLowerCase();
+    }
+
+    if (!ipv6Hostname) {
+      // IDNA Support: Returns a punycoded representation of "domain".
+      // It only converts parts of the domain name that
+      // have non-ASCII characters, i.e. it doesn't matter if
+      // you call it with a domain that already is ASCII-only.
+      this.hostname = punycode.toASCII(this.hostname);
+    }
+
+    var p = this.port ? ':' + this.port : '';
+    var h = this.hostname || '';
+    this.host = h + p;
+    this.href += this.host;
+
+    // strip [ and ] from the hostname
+    // the host field still retains them, though
+    if (ipv6Hostname) {
+      this.hostname = this.hostname.substr(1, this.hostname.length - 2);
+      if (rest[0] !== '/') {
+        rest = '/' + rest;
+      }
+    }
+  }
+
+  // now rest is set to the post-host stuff.
+  // chop off any delim chars.
+  if (!unsafeProtocol[lowerProto]) {
+
+    // First, make 100% sure that any "autoEscape" chars get
+    // escaped, even if encodeURIComponent doesn't think they
+    // need to be.
+    for (var i = 0, l = autoEscape.length; i < l; i++) {
+      var ae = autoEscape[i];
+      if (rest.indexOf(ae) === -1)
+        continue;
+      var esc = encodeURIComponent(ae);
+      if (esc === ae) {
+        esc = escape(ae);
+      }
+      rest = rest.split(ae).join(esc);
+    }
+  }
+
+
+  // chop off from the tail first.
+  var hash = rest.indexOf('#');
+  if (hash !== -1) {
+    // got a fragment string.
+    this.hash = rest.substr(hash);
+    rest = rest.slice(0, hash);
+  }
+  var qm = rest.indexOf('?');
+  if (qm !== -1) {
+    this.search = rest.substr(qm);
+    this.query = rest.substr(qm + 1);
+    if (parseQueryString) {
+      this.query = querystring.parse(this.query);
+    }
+    rest = rest.slice(0, qm);
+  } else if (parseQueryString) {
+    // no query string, but parseQueryString still requested
+    this.search = '';
+    this.query = {};
+  }
+  if (rest) this.pathname = rest;
+  if (slashedProtocol[lowerProto] &&
+      this.hostname && !this.pathname) {
+    this.pathname = '/';
+  }
+
+  //to support http.request
+  if (this.pathname || this.search) {
+    var p = this.pathname || '';
+    var s = this.search || '';
+    this.path = p + s;
+  }
+
+  // finally, reconstruct the href based on what has been validated.
+  this.href = this.format();
+  return this;
+};
+
+// format a parsed object into a url string
+function urlFormat(obj) {
+  // ensure it's an object, and not a string url.
+  // If it's an obj, this is a no-op.
+  // this way, you can call url_format() on strings
+  // to clean up potentially wonky urls.
+  if (util.isString(obj)) obj = urlParse(obj);
+  if (!(obj instanceof Url)) return Url.prototype.format.call(obj);
+  return obj.format();
+}
+
+Url.prototype.format = function() {
+  var auth = this.auth || '';
+  if (auth) {
+    auth = encodeURIComponent(auth);
+    auth = auth.replace(/%3A/i, ':');
+    auth += '@';
+  }
+
+  var protocol = this.protocol || '',
+      pathname = this.pathname || '',
+      hash = this.hash || '',
+      host = false,
+      query = '';
+
+  if (this.host) {
+    host = auth + this.host;
+  } else if (this.hostname) {
+    host = auth + (this.hostname.indexOf(':') === -1 ?
+        this.hostname :
+        '[' + this.hostname + ']');
+    if (this.port) {
+      host += ':' + this.port;
+    }
+  }
+
+  if (this.query &&
+      util.isObject(this.query) &&
+      Object.keys(this.query).length) {
+    query = querystring.stringify(this.query);
+  }
+
+  var search = this.search || (query && ('?' + query)) || '';
+
+  if (protocol && protocol.substr(-1) !== ':') protocol += ':';
+
+  // only the slashedProtocols get the //.  Not mailto:, xmpp:, etc.
+  // unless they had them to begin with.
+  if (this.slashes ||
+      (!protocol || slashedProtocol[protocol]) && host !== false) {
+    host = '//' + (host || '');
+    if (pathname && pathname.charAt(0) !== '/') pathname = '/' + pathname;
+  } else if (!host) {
+    host = '';
+  }
+
+  if (hash && hash.charAt(0) !== '#') hash = '#' + hash;
+  if (search && search.charAt(0) !== '?') search = '?' + search;
+
+  pathname = pathname.replace(/[?#]/g, function(match) {
+    return encodeURIComponent(match);
+  });
+  search = search.replace('#', '%23');
+
+  return protocol + host + pathname + search + hash;
+};
+
+function urlResolve(source, relative) {
+  return urlParse(source, false, true).resolve(relative);
+}
+
+Url.prototype.resolve = function(relative) {
+  return this.resolveObject(urlParse(relative, false, true)).format();
+};
+
+function urlResolveObject(source, relative) {
+  if (!source) return relative;
+  return urlParse(source, false, true).resolveObject(relative);
+}
+
+Url.prototype.resolveObject = function(relative) {
+  if (util.isString(relative)) {
+    var rel = new Url();
+    rel.parse(relative, false, true);
+    relative = rel;
+  }
+
+  var result = new Url();
+  var tkeys = Object.keys(this);
+  for (var tk = 0; tk < tkeys.length; tk++) {
+    var tkey = tkeys[tk];
+    result[tkey] = this[tkey];
+  }
+
+  // hash is always overridden, no matter what.
+  // even href="" will remove it.
+  result.hash = relative.hash;
+
+  // if the relative url is empty, then there's nothing left to do here.
+  if (relative.href === '') {
+    result.href = result.format();
+    return result;
+  }
+
+  // hrefs like //foo/bar always cut to the protocol.
+  if (relative.slashes && !relative.protocol) {
+    // take everything except the protocol from relative
+    var rkeys = Object.keys(relative);
+    for (var rk = 0; rk < rkeys.length; rk++) {
+      var rkey = rkeys[rk];
+      if (rkey !== 'protocol')
+        result[rkey] = relative[rkey];
+    }
+
+    //urlParse appends trailing / to urls like http://www.example.com
+    if (slashedProtocol[result.protocol] &&
+        result.hostname && !result.pathname) {
+      result.path = result.pathname = '/';
+    }
+
+    result.href = result.format();
+    return result;
+  }
+
+  if (relative.protocol && relative.protocol !== result.protocol) {
+    // if it's a known url protocol, then changing
+    // the protocol does weird things
+    // first, if it's not file:, then we MUST have a host,
+    // and if there was a path
+    // to begin with, then we MUST have a path.
+    // if it is file:, then the host is dropped,
+    // because that's known to be hostless.
+    // anything else is assumed to be absolute.
+    if (!slashedProtocol[relative.protocol]) {
+      var keys = Object.keys(relative);
+      for (var v = 0; v < keys.length; v++) {
+        var k = keys[v];
+        result[k] = relative[k];
+      }
+      result.href = result.format();
+      return result;
+    }
+
+    result.protocol = relative.protocol;
+    if (!relative.host && !hostlessProtocol[relative.protocol]) {
+      var relPath = (relative.pathname || '').split('/');
+      while (relPath.length && !(relative.host = relPath.shift()));
+      if (!relative.host) relative.host = '';
+      if (!relative.hostname) relative.hostname = '';
+      if (relPath[0] !== '') relPath.unshift('');
+      if (relPath.length < 2) relPath.unshift('');
+      result.pathname = relPath.join('/');
+    } else {
+      result.pathname = relative.pathname;
+    }
+    result.search = relative.search;
+    result.query = relative.query;
+    result.host = relative.host || '';
+    result.auth = relative.auth;
+    result.hostname = relative.hostname || relative.host;
+    result.port = relative.port;
+    // to support http.request
+    if (result.pathname || result.search) {
+      var p = result.pathname || '';
+      var s = result.search || '';
+      result.path = p + s;
+    }
+    result.slashes = result.slashes || relative.slashes;
+    result.href = result.format();
+    return result;
+  }
+
+  var isSourceAbs = (result.pathname && result.pathname.charAt(0) === '/'),
+      isRelAbs = (
+          relative.host ||
+          relative.pathname && relative.pathname.charAt(0) === '/'
+      ),
+      mustEndAbs = (isRelAbs || isSourceAbs ||
+                    (result.host && relative.pathname)),
+      removeAllDots = mustEndAbs,
+      srcPath = result.pathname && result.pathname.split('/') || [],
+      relPath = relative.pathname && relative.pathname.split('/') || [],
+      psychotic = result.protocol && !slashedProtocol[result.protocol];
+
+  // if the url is a non-slashed url, then relative
+  // links like ../.. should be able
+  // to crawl up to the hostname, as well.  This is strange.
+  // result.protocol has already been set by now.
+  // Later on, put the first path part into the host field.
+  if (psychotic) {
+    result.hostname = '';
+    result.port = null;
+    if (result.host) {
+      if (srcPath[0] === '') srcPath[0] = result.host;
+      else srcPath.unshift(result.host);
+    }
+    result.host = '';
+    if (relative.protocol) {
+      relative.hostname = null;
+      relative.port = null;
+      if (relative.host) {
+        if (relPath[0] === '') relPath[0] = relative.host;
+        else relPath.unshift(relative.host);
+      }
+      relative.host = null;
+    }
+    mustEndAbs = mustEndAbs && (relPath[0] === '' || srcPath[0] === '');
+  }
+
+  if (isRelAbs) {
+    // it's absolute.
+    result.host = (relative.host || relative.host === '') ?
+                  relative.host : result.host;
+    result.hostname = (relative.hostname || relative.hostname === '') ?
+                      relative.hostname : result.hostname;
+    result.search = relative.search;
+    result.query = relative.query;
+    srcPath = relPath;
+    // fall through to the dot-handling below.
+  } else if (relPath.length) {
+    // it's relative
+    // throw away the existing file, and take the new path instead.
+    if (!srcPath) srcPath = [];
+    srcPath.pop();
+    srcPath = srcPath.concat(relPath);
+    result.search = relative.search;
+    result.query = relative.query;
+  } else if (!util.isNullOrUndefined(relative.search)) {
+    // just pull out the search.
+    // like href='?foo'.
+    // Put this after the other two cases because it simplifies the booleans
+    if (psychotic) {
+      result.hostname = result.host = srcPath.shift();
+      //occationaly the auth can get stuck only in host
+      //this especially happens in cases like
+      //url.resolveObject('mailto:local1@domain1', 'local2@domain2')
+      var authInHost = result.host && result.host.indexOf('@') > 0 ?
+                       result.host.split('@') : false;
+      if (authInHost) {
+        result.auth = authInHost.shift();
+        result.host = result.hostname = authInHost.shift();
+      }
+    }
+    result.search = relative.search;
+    result.query = relative.query;
+    //to support http.request
+    if (!util.isNull(result.pathname) || !util.isNull(result.search)) {
+      result.path = (result.pathname ? result.pathname : '') +
+                    (result.search ? result.search : '');
+    }
+    result.href = result.format();
+    return result;
+  }
+
+  if (!srcPath.length) {
+    // no path at all.  easy.
+    // we've already handled the other stuff above.
+    result.pathname = null;
+    //to support http.request
+    if (result.search) {
+      result.path = '/' + result.search;
+    } else {
+      result.path = null;
+    }
+    result.href = result.format();
+    return result;
+  }
+
+  // if a url ENDs in . or .., then it must get a trailing slash.
+  // however, if it ends in anything else non-slashy,
+  // then it must NOT get a trailing slash.
+  var last = srcPath.slice(-1)[0];
+  var hasTrailingSlash = (
+      (result.host || relative.host || srcPath.length > 1) &&
+      (last === '.' || last === '..') || last === '');
+
+  // strip single dots, resolve double dots to parent dir
+  // if the path tries to go above the root, `up` ends up > 0
+  var up = 0;
+  for (var i = srcPath.length; i >= 0; i--) {
+    last = srcPath[i];
+    if (last === '.') {
+      srcPath.splice(i, 1);
+    } else if (last === '..') {
+      srcPath.splice(i, 1);
+      up++;
+    } else if (up) {
+      srcPath.splice(i, 1);
+      up--;
+    }
+  }
+
+  // if the path is allowed to go above the root, restore leading ..s
+  if (!mustEndAbs && !removeAllDots) {
+    for (; up--; up) {
+      srcPath.unshift('..');
+    }
+  }
+
+  if (mustEndAbs && srcPath[0] !== '' &&
+      (!srcPath[0] || srcPath[0].charAt(0) !== '/')) {
+    srcPath.unshift('');
+  }
+
+  if (hasTrailingSlash && (srcPath.join('/').substr(-1) !== '/')) {
+    srcPath.push('');
+  }
+
+  var isAbsolute = srcPath[0] === '' ||
+      (srcPath[0] && srcPath[0].charAt(0) === '/');
+
+  // put the host back
+  if (psychotic) {
+    result.hostname = result.host = isAbsolute ? '' :
+                                    srcPath.length ? srcPath.shift() : '';
+    //occationaly the auth can get stuck only in host
+    //this especially happens in cases like
+    //url.resolveObject('mailto:local1@domain1', 'local2@domain2')
+    var authInHost = result.host && result.host.indexOf('@') > 0 ?
+                     result.host.split('@') : false;
+    if (authInHost) {
+      result.auth = authInHost.shift();
+      result.host = result.hostname = authInHost.shift();
+    }
+  }
+
+  mustEndAbs = mustEndAbs || (result.host && srcPath.length);
+
+  if (mustEndAbs && !isAbsolute) {
+    srcPath.unshift('');
+  }
+
+  if (!srcPath.length) {
+    result.pathname = null;
+    result.path = null;
+  } else {
+    result.pathname = srcPath.join('/');
+  }
+
+  //to support request.http
+  if (!util.isNull(result.pathname) || !util.isNull(result.search)) {
+    result.path = (result.pathname ? result.pathname : '') +
+                  (result.search ? result.search : '');
+  }
+  result.auth = relative.auth || result.auth;
+  result.slashes = result.slashes || relative.slashes;
+  result.href = result.format();
+  return result;
+};
+
+Url.prototype.parseHost = function() {
+  var host = this.host;
+  var port = portPattern.exec(host);
+  if (port) {
+    port = port[0];
+    if (port !== ':') {
+      this.port = port.substr(1);
+    }
+    host = host.substr(0, host.length - port.length);
+  }
+  if (host) this.hostname = host;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/url/util.js":
+/*!**********************************!*\
+  !*** ./node_modules/url/util.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {
+  isString: function(arg) {
+    return typeof(arg) === 'string';
+  },
+  isObject: function(arg) {
+    return typeof(arg) === 'object' && arg !== null;
+  },
+  isNull: function(arg) {
+    return arg === null;
+  },
+  isNullOrUndefined: function(arg) {
+    return arg == null;
+  }
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/webpack/buildin/global.js":
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1, eval)("this");
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
+/***/ "./node_modules/webpack/buildin/module.js":
+/*!***********************************!*\
+  !*** (webpack)/buildin/module.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if (!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/xhr-mock/lib/MockError.js":
+/*!************************************************!*\
+  !*** ./node_modules/xhr-mock/lib/MockError.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var MockError = /** @class */ (function (_super) {
+    __extends(MockError, _super);
+    function MockError(message) {
+        var _this = _super.call(this, message) || this;
+        // hack to make instanceof work @see https://stackoverflow.com/questions/31626231/custom-error-class-in-typescript
+        Object.setPrototypeOf(_this, MockError.prototype);
+        return _this;
+    }
+    return MockError;
+}(Error));
+exports.MockError = MockError;
+
+
+/***/ }),
+
+/***/ "./node_modules/xhr-mock/lib/MockEvent.js":
+/*!************************************************!*\
+  !*** ./node_modules/xhr-mock/lib/MockEvent.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var MockEvent = /** @class */ (function () {
+    function MockEvent(type, eventInitDict) {
+        this.eventPhase = 0;
+        this.type = type || '';
+        if (eventInitDict) {
+            var _a = eventInitDict.scoped, scoped = _a === void 0 ? false : _a, _b = eventInitDict.bubbles, bubbles = _b === void 0 ? false : _b, _c = eventInitDict.cancelable, cancelable = _c === void 0 ? false : _c;
+            this.scoped = scoped;
+            this.bubbles = bubbles;
+            this.cancelable = cancelable;
+        }
+    }
+    MockEvent.prototype.initEvent = function (eventTypeArg, canBubbleArg, cancelableArg) {
+        throw new Error();
+    };
+    MockEvent.prototype.preventDefault = function () {
+        throw new Error();
+    };
+    MockEvent.prototype.stopImmediatePropagation = function () {
+        throw new Error();
+    };
+    MockEvent.prototype.stopPropagation = function () {
+        throw new Error();
+    };
+    MockEvent.prototype.deepPath = function () {
+        throw new Error();
+    };
+    return MockEvent;
+}());
+exports.default = MockEvent;
+
+
+/***/ }),
+
+/***/ "./node_modules/xhr-mock/lib/MockEventTarget.js":
+/*!******************************************************!*\
+  !*** ./node_modules/xhr-mock/lib/MockEventTarget.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var MockEventTarget = /** @class */ (function () {
+    function MockEventTarget() {
+        this.listeners = {};
+    }
+    MockEventTarget.prototype.addEventListener = function (type, listener, options) {
+        this.listeners = this.listeners || {};
+        if (!listener) {
+            return;
+        }
+        if (!this.listeners[type]) {
+            this.listeners[type] = [];
+        }
+        //handleEvent
+        if (this.listeners[type].indexOf(listener) === -1) {
+            this.listeners[type].push(listener);
+        }
+    };
+    MockEventTarget.prototype.removeEventListener = function (type, listener, options) {
+        this.listeners = this.listeners || {};
+        if (!listener) {
+            return;
+        }
+        if (!this.listeners[type]) {
+            return;
+        }
+        var index = this.listeners[type].indexOf(listener);
+        if (index !== -1) {
+            this.listeners[type].splice(index, 1);
+        }
+    };
+    MockEventTarget.prototype.dispatchEvent = function (event) {
+        var _this = this;
+        this.listeners = this.listeners || {};
+        //set the event target
+        event.target = this;
+        event.currentTarget = this;
+        //call any built-in listeners
+        //FIXME: the listener should be added on set
+        var method = this["on" + event.type];
+        if (method) {
+            method.call(this, event);
+        }
+        if (!this.listeners[event.type]) {
+            return true;
+        }
+        this.listeners[event.type].forEach(function (listener) {
+            if (typeof listener === 'function') {
+                listener.call(_this, event);
+            }
+            else {
+                listener.handleEvent.call(_this, event);
+            }
+        });
+        return true; //TODO: return type based on .cancellable and .preventDefault()
+    };
+    return MockEventTarget;
+}());
+exports.default = MockEventTarget;
+
+
+/***/ }),
+
+/***/ "./node_modules/xhr-mock/lib/MockProgressEvent.js":
+/*!********************************************************!*\
+  !*** ./node_modules/xhr-mock/lib/MockProgressEvent.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var MockEvent_1 = __webpack_require__(/*! ./MockEvent */ "./node_modules/xhr-mock/lib/MockEvent.js");
+var MockProgressEvent = /** @class */ (function (_super) {
+    __extends(MockProgressEvent, _super);
+    function MockProgressEvent(type, eventInitDict) {
+        var _this = _super.call(this, type, eventInitDict) || this;
+        if (eventInitDict) {
+            var _a = eventInitDict.lengthComputable, lengthComputable = _a === void 0 ? false : _a, _b = eventInitDict.loaded, loaded = _b === void 0 ? 0 : _b, _c = eventInitDict.total, total = _c === void 0 ? 0 : _c;
+            _this.lengthComputable = lengthComputable;
+            _this.loaded = loaded;
+            _this.total = total;
+        }
+        return _this;
+    }
+    MockProgressEvent.prototype.initProgressEvent = function (typeArg, canBubbleArg, cancelableArg, lengthComputableArg, loadedArg, totalArg) {
+        throw new Error();
+    };
+    return MockProgressEvent;
+}(MockEvent_1.default));
+exports.default = MockProgressEvent;
+
+
+/***/ }),
+
+/***/ "./node_modules/xhr-mock/lib/MockRequest.js":
+/*!**************************************************!*\
+  !*** ./node_modules/xhr-mock/lib/MockRequest.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var MockURL_1 = __webpack_require__(/*! ./MockURL */ "./node_modules/xhr-mock/lib/MockURL.js");
+var FORBIDDEN_METHODS = ['CONNECT', 'TRACE', 'TRACK'];
+var UPPERCASE_METHODS = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'POST', 'PUT'];
+var MockRequest = /** @class */ (function () {
+    function MockRequest() {
+        this._method = 'GET';
+        this._url = MockURL_1.parseURL('');
+        this._headers = {};
+        this._body = null;
+    }
+    MockRequest.prototype.method = function (method) {
+        if (typeof method !== 'undefined') {
+            if (FORBIDDEN_METHODS.indexOf(method.toUpperCase()) !== -1) {
+                throw new Error("xhr-mock: Method \"" + method + "\" is forbidden.");
+            }
+            if (UPPERCASE_METHODS.indexOf(method.toUpperCase()) !== -1) {
+                this._method = method.toUpperCase();
+            }
+            else {
+                this._method = method;
+            }
+            return this;
+        }
+        else {
+            return this._method;
+        }
+    };
+    MockRequest.prototype.url = function (url) {
+        if (typeof url === 'string') {
+            this._url = MockURL_1.parseURL(url);
+            return this;
+        }
+        else {
+            return this._url;
+        }
+    };
+    MockRequest.prototype.header = function (name, value) {
+        if (typeof value !== 'undefined') {
+            this._headers[name.toLowerCase()] = value;
+            return this;
+        }
+        else {
+            return this._headers[name.toLowerCase()] || null;
+        }
+    };
+    MockRequest.prototype.headers = function (headers) {
+        if (typeof headers === 'object') {
+            for (var name_1 in headers) {
+                if (headers.hasOwnProperty(name_1)) {
+                    this.header(name_1, headers[name_1]);
+                }
+            }
+            return this;
+        }
+        else {
+            return this._headers;
+        }
+    };
+    MockRequest.prototype.body = function (body) {
+        if (typeof body !== 'undefined') {
+            this._body = body;
+            return this;
+        }
+        else {
+            return this._body;
+        }
+    };
+    return MockRequest;
+}());
+exports.default = MockRequest;
+
+
+/***/ }),
+
+/***/ "./node_modules/xhr-mock/lib/MockResponse.js":
+/*!***************************************************!*\
+  !*** ./node_modules/xhr-mock/lib/MockResponse.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var MockResponse = /** @class */ (function () {
+    function MockResponse() {
+        this._status = 200;
+        this._reason = 'OK';
+        this._headers = {};
+        this._body = null;
+    }
+    MockResponse.prototype.status = function (status) {
+        if (typeof status !== 'undefined') {
+            this._status = status;
+            return this;
+        }
+        else {
+            return this._status;
+        }
+    };
+    MockResponse.prototype.reason = function (reason) {
+        if (typeof reason !== 'undefined') {
+            this._reason = reason;
+            return this;
+        }
+        else {
+            return this._reason;
+        }
+    };
+    MockResponse.prototype.statusText = function (reason) {
+        console.warn('xhr-mock: MockResponse.statusText() has been deprecated. Use MockResponse.reason() instead.');
+        if (typeof reason !== 'undefined') {
+            return this.reason(reason);
+        }
+        else {
+            return this.reason();
+        }
+    };
+    MockResponse.prototype.header = function (name, value) {
+        if (typeof value !== 'undefined') {
+            this._headers[name.toLowerCase()] = value;
+            return this;
+        }
+        else {
+            return this._headers[name.toLowerCase()] || null;
+        }
+    };
+    MockResponse.prototype.headers = function (headers) {
+        if (typeof headers === 'object') {
+            for (var name_1 in headers) {
+                if (headers.hasOwnProperty(name_1)) {
+                    this.header(name_1, headers[name_1]);
+                }
+            }
+            return this;
+        }
+        else {
+            return this._headers;
+        }
+    };
+    MockResponse.prototype.body = function (body) {
+        if (typeof body !== 'undefined') {
+            this._body = body;
+            return this;
+        }
+        else {
+            return this._body;
+        }
+    };
+    return MockResponse;
+}());
+exports.default = MockResponse;
+
+
+/***/ }),
+
+/***/ "./node_modules/xhr-mock/lib/MockURL.js":
+/*!**********************************************!*\
+  !*** ./node_modules/xhr-mock/lib/MockURL.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var url_1 = __webpack_require__(/*! url */ "./node_modules/url/url.js");
+// put toString() in a class so it isn't included in the props when checked for equality
+var MockURLImplementation = /** @class */ (function () {
+    function MockURLImplementation() {
+    }
+    MockURLImplementation.prototype.toString = function () {
+        return formatURL(this);
+    };
+    return MockURLImplementation;
+}());
+function parseURL(url) {
+    var urlObject = new MockURLImplementation();
+    if (!url) {
+        return urlObject;
+    }
+    var parsedURL = url_1.parse(url, true);
+    if (parsedURL.protocol) {
+        urlObject.protocol = parsedURL.protocol.substr(0, parsedURL.protocol.length - 1);
+    }
+    if (parsedURL.auth) {
+        var _a = parsedURL.auth.split(':'), username = _a[0], password = _a[1];
+        if (username && password) {
+            urlObject.username = username;
+            urlObject.password = password;
+        }
+        else {
+            urlObject.username = username;
+        }
+    }
+    if (parsedURL.hostname) {
+        urlObject.host = parsedURL.hostname;
+    }
+    if (parsedURL.port) {
+        urlObject.port = parseInt(parsedURL.port, 10);
+    }
+    if (parsedURL.pathname) {
+        urlObject.path = parsedURL.pathname;
+    }
+    if (parsedURL.query) {
+        urlObject.query = parsedURL.query;
+    }
+    if (parsedURL.hash) {
+        urlObject.hash = parsedURL.hash;
+    }
+    return urlObject;
+}
+exports.parseURL = parseURL;
+function formatURL(url) {
+    var obj = {
+        protocol: url.protocol,
+        auth: url.username && url.password
+            ? url.username + ":" + url.password
+            : url.username,
+        hostname: url.host,
+        port: typeof url.port === 'number' ? String(url.port) : url.port,
+        pathname: url.path,
+        query: url.query,
+        hash: url.hash
+    };
+    return url_1.format(obj);
+}
+exports.formatURL = formatURL;
+
+
+/***/ }),
+
+/***/ "./node_modules/xhr-mock/lib/MockXMLHttpRequest.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/xhr-mock/lib/MockXMLHttpRequest.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var MockURL_1 = __webpack_require__(/*! ./MockURL */ "./node_modules/xhr-mock/lib/MockURL.js");
+var MockRequest_1 = __webpack_require__(/*! ./MockRequest */ "./node_modules/xhr-mock/lib/MockRequest.js");
+var MockResponse_1 = __webpack_require__(/*! ./MockResponse */ "./node_modules/xhr-mock/lib/MockResponse.js");
+var MockEvent_1 = __webpack_require__(/*! ./MockEvent */ "./node_modules/xhr-mock/lib/MockEvent.js");
+var MockProgressEvent_1 = __webpack_require__(/*! ./MockProgressEvent */ "./node_modules/xhr-mock/lib/MockProgressEvent.js");
+var MockXMLHttpRequestUpload_1 = __webpack_require__(/*! ./MockXMLHttpRequestUpload */ "./node_modules/xhr-mock/lib/MockXMLHttpRequestUpload.js");
+var MockXMLHttpRequestEventTarget_1 = __webpack_require__(/*! ./MockXMLHttpRequestEventTarget */ "./node_modules/xhr-mock/lib/MockXMLHttpRequestEventTarget.js");
+var handle_1 = __webpack_require__(/*! ./handle */ "./node_modules/xhr-mock/lib/handle.js");
+var formatError_1 = __webpack_require__(/*! ./formatError */ "./node_modules/xhr-mock/lib/formatError.js");
+var MockError_1 = __webpack_require__(/*! ./MockError */ "./node_modules/xhr-mock/lib/MockError.js");
+var notImplementedError = new MockError_1.MockError("This feature hasn't been implmented yet. Please submit an Issue or Pull Request on Github.");
+// implemented according to https://xhr.spec.whatwg.org/
+var FORBIDDEN_METHODS = ['CONNECT', 'TRACE', 'TRACK'];
+var USE_URL_SEARCH_PARAMS = typeof URLSearchParams !== 'undefined';
+var ReadyState;
+(function (ReadyState) {
+    ReadyState[ReadyState["UNSENT"] = 0] = "UNSENT";
+    ReadyState[ReadyState["OPENED"] = 1] = "OPENED";
+    ReadyState[ReadyState["HEADERS_RECEIVED"] = 2] = "HEADERS_RECEIVED";
+    ReadyState[ReadyState["LOADING"] = 3] = "LOADING";
+    ReadyState[ReadyState["DONE"] = 4] = "DONE";
+})(ReadyState = exports.ReadyState || (exports.ReadyState = {}));
+function calculateProgress(req) {
+    var header = req.header('content-length');
+    var body = req.body();
+    var lengthComputable = false;
+    var total = 0;
+    if (header) {
+        var contentLength = parseInt(header, 10);
+        if (contentLength !== NaN) {
+            lengthComputable = true;
+            total = contentLength;
+        }
+    }
+    return {
+        lengthComputable: lengthComputable,
+        loaded: (body && body.length) || 0,
+        total: total
+    };
+}
+// @ts-ignore: https://github.com/jameslnewell/xhr-mock/issues/45
+var MockXMLHttpRequest = /** @class */ (function (_super) {
+    __extends(MockXMLHttpRequest, _super);
+    function MockXMLHttpRequest() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.UNSENT = ReadyState.UNSENT;
+        _this.OPENED = ReadyState.OPENED;
+        _this.HEADERS_RECEIVED = ReadyState.HEADERS_RECEIVED;
+        _this.LOADING = ReadyState.LOADING;
+        _this.DONE = ReadyState.DONE;
+        //some libraries (like Mixpanel) use the presence of this field to check if XHR is properly supported
+        // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials
+        _this.withCredentials = false;
+        _this.req = new MockRequest_1.default();
+        _this.res = new MockResponse_1.default();
+        _this.responseType = '';
+        _this.responseURL = '';
+        _this._timeout = 0;
+        // @ts-ignore: https://github.com/jameslnewell/xhr-mock/issues/45
+        _this.upload = new MockXMLHttpRequestUpload_1.default();
+        _this.readyState = MockXMLHttpRequest.UNSENT;
+        // flags
+        _this.isSynchronous = false;
+        _this.isSending = false;
+        _this.isUploadComplete = false;
+        _this.isAborted = false;
+        _this.isTimedOut = false;
+        return _this;
+    }
+    /**
+     * Add a mock handler
+     */
+    MockXMLHttpRequest.addHandler = function (fn) {
+        this.handlers.push(fn);
+    };
+    /**
+     * Remove a mock handler
+     */
+    MockXMLHttpRequest.removeHandler = function (fn) {
+        throw notImplementedError;
+    };
+    /**
+     * Remove all request handlers
+     */
+    MockXMLHttpRequest.removeAllHandlers = function () {
+        this.handlers = [];
+    };
+    Object.defineProperty(MockXMLHttpRequest.prototype, "timeout", {
+        get: function () {
+            return this._timeout;
+        },
+        set: function (timeout) {
+            if (timeout !== 0 && this.isSynchronous) {
+                throw new MockError_1.MockError('Timeouts cannot be set for synchronous requests made from a document.');
+            }
+            this._timeout = timeout;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MockXMLHttpRequest.prototype, "response", {
+        // https://xhr.spec.whatwg.org/#the-response-attribute
+        get: function () {
+            if (this.responseType === '' || this.responseType === 'text') {
+                if (this.readyState !== this.LOADING && this.readyState !== this.DONE) {
+                    return '';
+                }
+                return this.responseText;
+            }
+            if (this.readyState !== this.DONE) {
+                return null;
+            }
+            var body = this.res.body();
+            if (!body) {
+                return null;
+            }
+            if (this.responseType === 'json' && typeof body === 'string') {
+                try {
+                    return JSON.parse(this.responseText);
+                }
+                catch (error) {
+                    return null;
+                }
+            }
+            if (this.responseType === 'blob' && typeof body === 'string') {
+                try {
+                    throw notImplementedError;
+                }
+                catch (error) {
+                    return null;
+                }
+            }
+            if (this.responseType === 'arraybuffer' && typeof body === 'string') {
+                try {
+                    throw notImplementedError;
+                }
+                catch (error) {
+                    return null;
+                }
+            }
+            if (this.responseType === 'document' && typeof body === 'string') {
+                try {
+                    throw notImplementedError;
+                }
+                catch (error) {
+                    return null;
+                }
+            }
+            // rely on the mock to do the right thing with an arraybuffer, blob or document
+            return body;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MockXMLHttpRequest.prototype, "responseText", {
+        get: function () {
+            return this.res.body() || '';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MockXMLHttpRequest.prototype, "responseXML", {
+        get: function () {
+            throw notImplementedError;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MockXMLHttpRequest.prototype, "status", {
+        get: function () {
+            return this.res.status();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MockXMLHttpRequest.prototype, "statusText", {
+        get: function () {
+            return this.res.reason();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MockXMLHttpRequest.prototype.getAllResponseHeaders = function () {
+        // I'm pretty sure this fn can return null, but TS types say no
+        // if (this.readyState < MockXMLHttpRequest.HEADERS_RECEIVED) {
+        //   return null;
+        // }
+        var headers = this.res.headers();
+        var result = Object.keys(headers)
+            .map(function (name) { return name + ": " + headers[name] + "\r\n"; })
+            .join('');
+        return result;
+    };
+    MockXMLHttpRequest.prototype.getResponseHeader = function (name) {
+        if (this.readyState < MockXMLHttpRequest.HEADERS_RECEIVED) {
+            return null;
+        }
+        return this.res.header(name);
+    };
+    MockXMLHttpRequest.prototype.setRequestHeader = function (name, value) {
+        if (this.readyState < MockXMLHttpRequest.OPENED) {
+            throw new MockError_1.MockError('xhr must be OPENED.');
+        }
+        this.req.header(name, value);
+    };
+    MockXMLHttpRequest.prototype.overrideMimeType = function (mime) {
+        throw notImplementedError;
+    };
+    MockXMLHttpRequest.prototype.open = function (method, url, async, username, password) {
+        if (async === void 0) { async = true; }
+        if (username === void 0) { username = null; }
+        if (password === void 0) { password = null; }
+        // if method is not a method, then throw a "SyntaxError" DOMException
+        // if method is a forbidden method, then throw a "SecurityError" DOMException
+        if (FORBIDDEN_METHODS.indexOf(method) !== -1) {
+            throw new MockError_1.MockError("Method " + method + " is forbidden.");
+        }
+        // normalize method
+        method = method.toUpperCase();
+        // let parsedURL be the result of parsing url with settingsObject’s API base URL and settingsObject’s API URL character encoding
+        // if parsedURL is failure, then throw a "SyntaxError" DOMException
+        var fullURL = MockURL_1.parseURL(url);
+        // if the async argument is omitted, set async to true, and set username and password to null.
+        // if parsedURL’s host is non-null, run these substeps:
+        // if the username argument is not null, set the username given parsedURL and username
+        // if the password argument is not null, set the password given parsedURL and password
+        fullURL.username = username || '';
+        fullURL.password = (username && password) || '';
+        // if async is false, current global object is a Window object, and the timeout attribute value
+        // is not zero or the responseType attribute value is not the empty string, then throw an "InvalidAccessError" DOMException.
+        if (!async && (this._timeout !== 0 || this.responseType !== '')) {
+            throw new MockError_1.MockError('InvalidAccessError');
+        }
+        // terminate the ongoing fetch operated by the XMLHttpRequest object
+        if (this.isSending) {
+            throw new MockError_1.MockError('Unable to terminate the previous request');
+        }
+        // set variables associated with the object as follows:
+        // - unset the send() flag and upload listener flag
+        // - set the synchronous flag, if async is false, and unset the synchronous flag otherwise
+        // - set request method to method
+        // - set request URL to parsedURL
+        // - empty author request headers
+        this.isSending = false;
+        this.isSynchronous = !async;
+        this.req
+            .method(method)
+            .headers({})
+            .url(MockURL_1.formatURL(fullURL));
+        this.applyNetworkError();
+        // if the state is not opened, run these substeps:
+        if (this.readyState !== this.OPENED) {
+            // set state to opened
+            this.readyState = MockXMLHttpRequest.OPENED;
+            // fire an event named readystatechange
+            this.dispatchEvent(new MockEvent_1.default('readystatechange'));
+        }
+    };
+    MockXMLHttpRequest.prototype.sendSync = function () {
+        // let response be the result of fetching req
+        var res;
+        try {
+            res = handle_1.sync(MockXMLHttpRequest.handlers, this.req, this.res);
+            // if the timeout attribute value is not zero, then set the timed out flag and terminate fetching if it has not returned within the amount of milliseconds from the timeout.
+            // TODO: check if timeout was elapsed
+            //if response’s body is null, then run handle response end-of-body and return
+            // let reader be the result of getting a reader from response’s body’s stream
+            // let promise be the result of reading all bytes from response’s body’s stream with reader
+            // wait for promise to be fulfilled or rejected
+            // if promise is fulfilled with bytes, then append bytes to received bytes
+            // run handle response end-of-body for response
+            this.handleResponseBody(res);
+        }
+        catch (error) {
+            MockXMLHttpRequest.errorCallback({ req: this.req, err: error });
+            this.handleError(error);
+        }
+    };
+    MockXMLHttpRequest.prototype.sendAsync = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            var req, progress, progress_1, res, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        req = this.req;
+                        progress = calculateProgress(this.res);
+                        this.dispatchEvent(new MockProgressEvent_1.default('loadstart', __assign({}, progress, { loaded: 0 })));
+                        // if the upload complete flag is unset and upload listener flag is set, then fire a progress
+                        // event named loadstart on the XMLHttpRequestUpload object with 0 and req’s body’s total bytes.
+                        if (!this.isUploadComplete) {
+                            progress_1 = calculateProgress(this.req);
+                            this.upload.dispatchEvent(new MockProgressEvent_1.default('loadstart', __assign({}, progress_1, { loaded: 0 })));
+                        }
+                        // if state is not opened or the send() flag is unset, then return.
+                        if (this.readyState !== this.OPENED || !this.isSending) {
+                            return [2 /*return*/];
+                        }
+                        // fetch req. Handle the tasks queued on the networking task source per below
+                        // run these subsubsteps in parallel:
+                        // wait until either req’s done flag is set or
+                        // the timeout attribute value number of milliseconds has passed since these subsubsteps started
+                        // while timeout attribute value is not zero
+                        // if req’s done flag is unset, then set the timed out flag and terminate fetching
+                        if (this._timeout !== 0) {
+                            // @ts-ignore: wants a NodeJS.Timer because of @types/node
+                            this._timeoutTimer = setTimeout(function () {
+                                _this.isTimedOut = true;
+                                _this.handleError();
+                            }, this._timeout);
+                        }
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, handle_1.async(MockXMLHttpRequest.handlers, this.req, this.res)];
+                    case 2:
+                        res = _a.sent();
+                        //we've received a response before the timeout so we don't want to timeout
+                        clearTimeout(this._timeoutTimer);
+                        if (this.isAborted || this.isTimedOut) {
+                            return [2 /*return*/]; // these cases will already have been handled
+                        }
+                        this.sendRequest(req);
+                        this.receiveResponse(res);
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_1 = _a.sent();
+                        //we've received an error before the timeout so we don't want to timeout
+                        clearTimeout(this._timeoutTimer);
+                        if (this.isAborted || this.isTimedOut) {
+                            return [2 /*return*/]; // these cases will already have been handled
+                        }
+                        MockXMLHttpRequest.errorCallback({ req: this.req, err: error_1 });
+                        this.handleError(error_1);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    MockXMLHttpRequest.prototype.applyNetworkError = function () {
+        // a network error is a response whose status is always 0, status message is always the
+        // empty byte sequence, header list is always empty, body is always null, and
+        // trailer is always empty
+        this.res
+            .status(0)
+            .reason('')
+            .headers({})
+            .body(null);
+    };
+    // @see https://xhr.spec.whatwg.org/#request-error-steps
+    MockXMLHttpRequest.prototype.reportError = function (event) {
+        // set state to done
+        this.readyState = this.DONE;
+        // unset the send() flag
+        this.isSending = false;
+        // set response to network error
+        this.applyNetworkError();
+        // if the synchronous flag is set, throw an exception exception
+        if (this.isSynchronous) {
+            throw new MockError_1.MockError('An error occurred whilst sending a synchronous request.');
+        }
+        // fire an event named readystatechange
+        this.dispatchEvent(new MockEvent_1.default('readystatechange'));
+        // if the upload complete flag is unset, follow these substeps:
+        if (!this.isUploadComplete) {
+            // set the upload complete flag
+            this.isUploadComplete = true;
+            // if upload listener flag is unset, then terminate these substeps
+            // NOTE: not sure why this is necessary - if there's no listeners  listening, then the
+            // following events have no impact
+            var uploadProgress = calculateProgress(this.req);
+            // fire a progress event named event on the XMLHttpRequestUpload object with 0 and 0
+            this.upload.dispatchEvent(new MockProgressEvent_1.default(event, uploadProgress));
+            // fire a progress event named loadend on the XMLHttpRequestUpload object with 0 and 0
+            this.upload.dispatchEvent(new MockProgressEvent_1.default('loadend', uploadProgress));
+        }
+        var downloadProgress = calculateProgress(this.res);
+        // fire a progress event named event with 0 and 0
+        this.dispatchEvent(new MockProgressEvent_1.default(event, downloadProgress));
+        // fire a progress event named loadend with 0 and 0
+        this.dispatchEvent(new MockProgressEvent_1.default('loadend', downloadProgress));
+    };
+    MockXMLHttpRequest.prototype.sendRequest = function (req) {
+        if (this.isUploadComplete) {
+            return;
+        }
+        // if not roughly 50ms have passed since these subsubsteps were last invoked, terminate these subsubsteps
+        // TODO:
+        // If upload listener flag is set, then fire a progress event named progress on the
+        // XMLHttpRequestUpload object with request’s body’s transmitted bytes and request’s body’s
+        // total bytes
+        // const progress = getProgress(this.req);
+        // this.upload.dispatchEvent(new MockProgressEvent('progress', {
+        //   ...progress,
+        //   loaded: %
+        // }))
+        // TODO: repeat this in a timeout to simulate progress events
+        // TODO: dispatch total, length and lengthComputable values
+        // set the upload complete flag
+        this.isUploadComplete = true;
+        // if upload listener flag is unset, then terminate these subsubsteps.
+        // NOTE: it doesn't really matter if we emit these events and noone is listening
+        // let transmitted be request’s body’s transmitted bytes
+        // let length be request’s body’s total bytes
+        var progress = calculateProgress(this.req);
+        // fire a progress event named progress on the XMLHttpRequestUpload object with transmitted and length
+        this.upload.dispatchEvent(new MockProgressEvent_1.default('progress', progress));
+        // fire a progress event named load on the XMLHttpRequestUpload object with transmitted and length
+        this.upload.dispatchEvent(new MockProgressEvent_1.default('load', progress));
+        // fire a progress event named loadend on the XMLHttpRequestUpload object with transmitted and length
+        this.upload.dispatchEvent(new MockProgressEvent_1.default('loadend', progress));
+    };
+    MockXMLHttpRequest.prototype.receiveResponse = function (res) {
+        // set state to headers received
+        this.readyState = this.HEADERS_RECEIVED;
+        // fire an event named readystatechange
+        this.dispatchEvent(new MockEvent_1.default('readystatechange'));
+        // if state is not headers received, then return
+        // NOTE: is that really necessary, we've just change the state a second ago
+        // if response’s body is null, then run handle response end-of-body and return
+        if (res.body() === null) {
+            this.handleResponseBody(res);
+            return;
+        }
+        // let reader be the result of getting a reader from response’s body’s stream
+        // let read be the result of reading a chunk from response’s body’s stream with reader
+        // When read is fulfilled with an object whose done property is false and whose value property
+        // is a Uint8Array object, run these subsubsubsteps and then run the above subsubstep again:
+        // TODO:
+        // append the value property to received bytes
+        // if not roughly 50ms have passed since these subsubsubsteps were last invoked, then terminate
+        // these subsubsubsteps
+        // TODO:
+        // if state is headers received, then set state to loading
+        // NOTE: why wouldn't it be headers received?
+        this.readyState = this.LOADING;
+        // fire an event named readystatechange
+        this.dispatchEvent(new MockEvent_1.default('readystatechange'));
+        // fire a progress event named progress with response’s body’s transmitted bytes and response’s
+        // body’s total bytes
+        // TODO: repeat to simulate progress
+        // const progress = calculateProgress(res);
+        // this.dispatchEvent(new MockProgressEvent('progress', {
+        //   ...progress,
+        //   loaded: %
+        // }));
+        // when read is fulfilled with an object whose done property is true, run handle response
+        // end-of-body for response
+        // when read is rejected with an exception, run handle errors for response
+        // NOTE: we don't handle this error case
+        this.handleResponseBody(res);
+    };
+    // @see https://xhr.spec.whatwg.org/#handle-errors
+    MockXMLHttpRequest.prototype.handleError = function (error) {
+        // if the send() flag is unset, return
+        if (!this.isSending) {
+            return;
+        }
+        // if the timed out flag is set, then run the request error steps for event timeout and exception TimeoutError
+        if (this.isTimedOut) {
+            this.reportError('timeout');
+            return;
+        }
+        // otherwise, if response’s body’s stream is errored, then:
+        // NOTE: we're not handling this event
+        // if () {
+        //   // set state to done
+        //   this.readyState = this.DONE;
+        //   // unset the send() flag
+        //   this.isSending = false;
+        //   // set response to a network error
+        //   this.applyNetworkError();
+        //   return;
+        // }
+        // otherwise, if response’s aborted flag is set, then run the request error steps for event abort and exception AbortError
+        if (this.isAborted) {
+            this.reportError('abort');
+            return;
+        }
+        // if response is a network error, run the request error steps for event error and exception NetworkError
+        // NOTE: we assume all other calls are network errors
+        this.reportError('error');
+    };
+    // @see https://xhr.spec.whatwg.org/#handle-response-end-of-body
+    MockXMLHttpRequest.prototype.handleResponseBody = function (res) {
+        this.res = res;
+        // let transmitted be response’s body’s transmitted bytes
+        // let length be response’s body’s total bytes.
+        var progress = calculateProgress(res);
+        // if the synchronous flag is unset, update response’s body using response
+        if (!this.isSynchronous) {
+            // fire a progress event named progress with transmitted and length
+            this.dispatchEvent(new MockProgressEvent_1.default('progress', progress));
+        }
+        // set state to done
+        this.readyState = this.DONE;
+        // unset the send() flag
+        this.isSending = false;
+        // fire an event named readystatechange
+        this.dispatchEvent(new MockEvent_1.default('readystatechange'));
+        // fire a progress event named load with transmitted and length
+        this.dispatchEvent(new MockProgressEvent_1.default('load', progress));
+        // fire a progress event named loadend with transmitted and length
+        this.dispatchEvent(new MockProgressEvent_1.default('loadend', progress));
+    };
+    MockXMLHttpRequest.prototype.send = function (body) {
+        // if state is not opened, throw an InvalidStateError exception
+        if (this.readyState !== MockXMLHttpRequest.OPENED) {
+            throw new MockError_1.MockError('Please call MockXMLHttpRequest.open() before MockXMLHttpRequest.send().');
+        }
+        // if the send() flag is set, throw an InvalidStateError exception
+        if (this.isSending) {
+            throw new MockError_1.MockError('MockXMLHttpRequest.send() has already been called.');
+        }
+        // if the request method is GET or HEAD, set body to null
+        if (this.req.method() === 'GET' || this.req.method() === 'HEAD') {
+            body = null;
+        }
+        // if body is null, go to the next step otherwise, let encoding and mimeType be null, and then follow these rules, switching on body
+        var encoding;
+        var mimeType;
+        if (body !== null && body !== undefined) {
+            if (body instanceof Document) {
+                // Set encoding to `UTF-8`.
+                // Set mimeType to `text/html` if body is an HTML document, and to `application/xml` otherwise. Then append `;charset=UTF-8` to mimeType.
+                // Set request body to body, serialized, converted to Unicode, and utf-8 encoded.
+                encoding = 'UTF-8';
+                mimeType =
+                    body instanceof XMLDocument ? 'application/xml' : 'text/html';
+            }
+            else {
+                // If body is a string, set encoding to `UTF-8`.
+                // Set request body and mimeType to the result of extracting body.
+                // https://fetch.spec.whatwg.org/#concept-bodyinit-extract
+                if (body instanceof Blob) {
+                    mimeType = body.type;
+                }
+                else if (body instanceof FormData) {
+                    mimeType = 'multipart/form-data; boundary=----XHRMockFormBoundary';
+                }
+                else if (USE_URL_SEARCH_PARAMS && body instanceof URLSearchParams) {
+                    encoding = 'UTF-8';
+                    mimeType = 'application/x-www-form-urlencoded';
+                }
+                else if (typeof body === 'string') {
+                    encoding = 'UTF-8';
+                    mimeType = 'text/plain';
+                }
+                else {
+                    throw notImplementedError;
+                }
+            }
+            // if mimeType is non-null and author request headers does not contain `Content-Type`, then append `Content-Type`/mimeType to author request headers.
+            // otherwise, if the header whose name is a byte-case-insensitive match for `Content-Type` in author request headers has a value that is a valid MIME type,
+            //    which has a `charset` parameter whose value is not a byte-case-insensitive match for encoding, and encoding is not null, then set all the `charset` parameters
+            //    whose value is not a byte-case-insensitive match for encoding of that header’s value to encoding.
+            // chrome seems to forget the second case ^^^
+            var contentType = this.req.header('content-type');
+            if (!contentType) {
+                this.req.header('content-type', encoding ? mimeType + "; charset=" + encoding : mimeType);
+            }
+            this.req.body(body);
+        }
+        // if one or more event listeners are registered on the associated XMLHttpRequestUpload object, then set upload listener flag
+        // Note: not really necessary since dispatching an event to no listeners doesn't hurt anybody
+        //TODO: check CORs
+        // unset the upload complete flag
+        this.isUploadComplete = false;
+        // unset the timed out flag
+        this.isTimedOut = false;
+        // if req’s body is null, set the upload complete flag
+        if (body === null || body === undefined) {
+            this.isUploadComplete = true;
+        }
+        // set the send() flag
+        this.isSending = true;
+        if (this.isSynchronous) {
+            this.sendSync();
+        }
+        else {
+            this.sendAsync();
+        }
+    };
+    MockXMLHttpRequest.prototype.abort = function () {
+        //we've cancelling the response before the timeout period so we don't want to timeout
+        clearTimeout(this._timeoutTimer);
+        // terminate the ongoing fetch with the aborted flag set
+        this.isAborted = true;
+        // if state is either opened with the send() flag set, headers received, or loading,
+        // run the request error steps for event
+        if (this.readyState === this.OPENED ||
+            this.readyState === this.HEADERS_RECEIVED ||
+            this.readyState === this.LOADING) {
+            this.reportError('abort');
+        }
+        // if state is done, then set state to unsent and response to a network error
+        if (this.readyState === this.DONE) {
+            this.readyState = this.UNSENT;
+            this.applyNetworkError();
+            return;
+        }
+    };
+    MockXMLHttpRequest.prototype.msCachingEnabled = function () {
+        return false;
+    };
+    MockXMLHttpRequest.UNSENT = ReadyState.UNSENT;
+    MockXMLHttpRequest.OPENED = ReadyState.OPENED;
+    MockXMLHttpRequest.HEADERS_RECEIVED = ReadyState.HEADERS_RECEIVED;
+    MockXMLHttpRequest.LOADING = ReadyState.LOADING;
+    MockXMLHttpRequest.DONE = ReadyState.DONE;
+    MockXMLHttpRequest.handlers = [];
+    MockXMLHttpRequest.errorCallback = function (_a) {
+        var req = _a.req, err = _a.err;
+        if (err instanceof MockError_1.MockError) {
+            console.error(formatError_1.formatError(err.message, req));
+        }
+        else {
+            console.error(formatError_1.formatError('A handler returned an error for the request.', req, err));
+        }
+    };
+    return MockXMLHttpRequest;
+}(MockXMLHttpRequestEventTarget_1.default));
+exports.default = MockXMLHttpRequest;
+
+
+/***/ }),
+
+/***/ "./node_modules/xhr-mock/lib/MockXMLHttpRequestEventTarget.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/xhr-mock/lib/MockXMLHttpRequestEventTarget.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var MockEventTarget_1 = __webpack_require__(/*! ./MockEventTarget */ "./node_modules/xhr-mock/lib/MockEventTarget.js");
+// @ts-ignore: https://github.com/jameslnewell/xhr-mock/issues/45
+var MockXMLHttpRequestEventTarget = /** @class */ (function (_super) {
+    __extends(MockXMLHttpRequestEventTarget, _super);
+    function MockXMLHttpRequestEventTarget() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return MockXMLHttpRequestEventTarget;
+}(MockEventTarget_1.default));
+exports.default = MockXMLHttpRequestEventTarget;
+
+
+/***/ }),
+
+/***/ "./node_modules/xhr-mock/lib/MockXMLHttpRequestUpload.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/xhr-mock/lib/MockXMLHttpRequestUpload.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var MockXMLHttpRequestEventTarget_1 = __webpack_require__(/*! ./MockXMLHttpRequestEventTarget */ "./node_modules/xhr-mock/lib/MockXMLHttpRequestEventTarget.js");
+// @ts-ignore: https://github.com/jameslnewell/xhr-mock/issues/45
+var MockXMLHttpRequestUpload = /** @class */ (function (_super) {
+    __extends(MockXMLHttpRequestUpload, _super);
+    function MockXMLHttpRequestUpload() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return MockXMLHttpRequestUpload;
+}(MockXMLHttpRequestEventTarget_1.default));
+exports.default = MockXMLHttpRequestUpload;
+
+
+/***/ }),
+
+/***/ "./node_modules/xhr-mock/lib/XHRMock.js":
+/*!**********************************************!*\
+  !*** ./node_modules/xhr-mock/lib/XHRMock.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var window = __webpack_require__(/*! global */ "./node_modules/global/window.js");
+var createMockFunction_1 = __webpack_require__(/*! ./createMockFunction */ "./node_modules/xhr-mock/lib/createMockFunction.js");
+var MockXMLHttpRequest_1 = __webpack_require__(/*! ./MockXMLHttpRequest */ "./node_modules/xhr-mock/lib/MockXMLHttpRequest.js");
+var RealXMLHttpRequest = window.XMLHttpRequest;
+var XHRMock = /** @class */ (function () {
+    function XHRMock() {
+        this.RealXMLHttpRequest = RealXMLHttpRequest;
+    }
+    XHRMock.prototype.setup = function () {
+        // @ts-ignore: https://github.com/jameslnewell/xhr-mock/issues/45
+        window.XMLHttpRequest = MockXMLHttpRequest_1.default;
+        this.reset();
+        return this;
+    };
+    XHRMock.prototype.teardown = function () {
+        this.reset();
+        window.XMLHttpRequest = RealXMLHttpRequest;
+        return this;
+    };
+    XHRMock.prototype.reset = function () {
+        MockXMLHttpRequest_1.default.removeAllHandlers();
+        return this;
+    };
+    XHRMock.prototype.error = function (callback) {
+        MockXMLHttpRequest_1.default.errorCallback = callback;
+        return this;
+    };
+    XHRMock.prototype.mock = function (fnOrMethod, url, mock) {
+        console.warn('xhr-mock: XHRMock.mock() has been deprecated. Use XHRMock.use() instead.');
+        if (typeof fnOrMethod === 'string' &&
+            (typeof url === 'string' || url instanceof RegExp) &&
+            mock !== undefined) {
+            return this.use(fnOrMethod, url, mock);
+        }
+        else if (typeof fnOrMethod === 'function') {
+            return this.use(fnOrMethod);
+        }
+        else {
+            throw new Error('xhr-mock: Invalid handler.');
+        }
+    };
+    XHRMock.prototype.use = function (fnOrMethod, url, mock) {
+        var fn;
+        if (typeof fnOrMethod === 'string' &&
+            (typeof url === 'string' || url instanceof RegExp) &&
+            mock !== undefined) {
+            fn = createMockFunction_1.default(fnOrMethod, url, mock);
+        }
+        else if (typeof fnOrMethod === 'function') {
+            fn = fnOrMethod;
+        }
+        else {
+            throw new Error('xhr-mock: Invalid handler.');
+        }
+        MockXMLHttpRequest_1.default.addHandler(fn);
+        return this;
+    };
+    XHRMock.prototype.get = function (url, mock) {
+        return this.use('GET', url, mock);
+    };
+    XHRMock.prototype.post = function (url, mock) {
+        return this.use('POST', url, mock);
+    };
+    XHRMock.prototype.put = function (url, mock) {
+        return this.use('PUT', url, mock);
+    };
+    XHRMock.prototype.patch = function (url, mock) {
+        return this.use('PATCH', url, mock);
+    };
+    XHRMock.prototype.delete = function (url, mock) {
+        return this.use('DELETE', url, mock);
+    };
+    return XHRMock;
+}());
+exports.XHRMock = XHRMock;
+// I'm only using a class so I can make use make use of TS' method overrides
+exports.default = new XHRMock();
+
+
+/***/ }),
+
+/***/ "./node_modules/xhr-mock/lib/createMockFunction.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/xhr-mock/lib/createMockFunction.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var MockResponse_1 = __webpack_require__(/*! ./MockResponse */ "./node_modules/xhr-mock/lib/MockResponse.js");
+function createResponseFromObject(object) {
+    var status = object.status, reason = object.reason, headers = object.headers, body = object.body;
+    var response = new MockResponse_1.default();
+    if (status) {
+        response.status(status);
+    }
+    if (reason) {
+        response.reason(reason);
+    }
+    if (headers) {
+        response.headers(headers);
+    }
+    if (body) {
+        response.body(body);
+    }
+    return response;
+}
+function default_1(method, url, mock) {
+    var matches = function (req) {
+        var requestMethod = req.method();
+        var requestURL = req.url().toString();
+        if (requestMethod.toUpperCase() !== method.toUpperCase()) {
+            return false;
+        }
+        if (url instanceof RegExp) {
+            url.lastIndex = 0; //reset state of global regexp
+            return url.test(requestURL);
+        }
+        return requestURL === url; //TODO: should we use .startsWith()???
+    };
+    return function (req, res) {
+        if (matches(req)) {
+            if (typeof mock === 'object') {
+                return createResponseFromObject(mock);
+            }
+            else {
+                return mock(req, res);
+            }
+        }
+    };
+}
+exports.default = default_1;
+
+
+/***/ }),
+
+/***/ "./node_modules/xhr-mock/lib/formatError.js":
+/*!**************************************************!*\
+  !*** ./node_modules/xhr-mock/lib/formatError.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+function convertRequestToString(req) {
+    var headers = Object.keys(req.headers()).map(function (name) { return name + ": " + req.header(name); });
+    var body = req.body() ? req.body() : '';
+    return req.method() + " " + req.url() + " HTTP/1.1\n" + (headers ? headers.join('\n') + "\n" : '') + "\n" + (body ? body : '') + "\n";
+}
+function indentSuccessiveLines(string, indent) {
+    return string
+        .split('\n')
+        .map(function (line, index) { return Array(indent + 1).join(' ') + line; })
+        .join('\n');
+}
+function formatError(msg, req, err) {
+    return "xhr-mock: " + msg + "\n\n  " + indentSuccessiveLines(convertRequestToString(req), 2).trim() + "\n  " + (err !== undefined
+        ? "\n" + indentSuccessiveLines((err && err.stack) || (err && err.message) || "Error: " + err, 2)
+        : '') + "\n";
+}
+exports.formatError = formatError;
+
+
+/***/ }),
+
+/***/ "./node_modules/xhr-mock/lib/handle.js":
+/*!*********************************************!*\
+  !*** ./node_modules/xhr-mock/lib/handle.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var MockError_1 = __webpack_require__(/*! ./MockError */ "./node_modules/xhr-mock/lib/MockError.js");
+var NO_RESPONSE_ERROR = new MockError_1.MockError('No handler returned a response for the request.');
+function isPromise(arg) {
+    return arg && arg.then !== undefined;
+}
+function sync(handlers, request, response) {
+    for (var i = 0; i < handlers.length; ++i) {
+        var result = handlers[i](request, response);
+        if (result) {
+            if (isPromise(result)) {
+                throw new MockError_1.MockError('A handler returned a Promise<MockResponse> for a synchronous request.');
+            }
+            return result;
+        }
+    }
+    throw NO_RESPONSE_ERROR;
+}
+exports.sync = sync;
+function async(handlers, request, response) {
+    return handlers
+        .reduce(function (promise, handler) {
+        return promise.then(function (result) {
+            if (!result) {
+                return handler(request, response);
+            }
+            return result;
+        });
+    }, Promise.resolve(undefined))
+        .then(function (result) {
+        if (!result) {
+            throw NO_RESPONSE_ERROR;
+        }
+        return result;
+    });
+}
+exports.async = async;
+
+
+/***/ }),
+
+/***/ "./node_modules/xhr-mock/lib/index.js":
+/*!********************************************!*\
+  !*** ./node_modules/xhr-mock/lib/index.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var XHRMock_1 = __webpack_require__(/*! ./XHRMock */ "./node_modules/xhr-mock/lib/XHRMock.js");
+var MockRequest_1 = __webpack_require__(/*! ./MockRequest */ "./node_modules/xhr-mock/lib/MockRequest.js");
+exports.MockRequest = MockRequest_1.default;
+var MockResponse_1 = __webpack_require__(/*! ./MockResponse */ "./node_modules/xhr-mock/lib/MockResponse.js");
+exports.MockResponse = MockResponse_1.default;
+var proxy_1 = __webpack_require__(/*! ./proxy */ "./node_modules/xhr-mock/lib/proxy.browser.js");
+exports.proxy = proxy_1.default;
+exports.default = XHRMock_1.default;
+
+
+/***/ }),
+
+/***/ "./node_modules/xhr-mock/lib/proxy.browser.js":
+/*!****************************************************!*\
+  !*** ./node_modules/xhr-mock/lib/proxy.browser.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var XHRMock_1 = __webpack_require__(/*! ./XHRMock */ "./node_modules/xhr-mock/lib/XHRMock.js");
+function parseHeaders(string) {
+    var headers = {};
+    var lines = string.split('\r\n');
+    lines.forEach(function (line) {
+        var _a = line.split(':', 2), name = _a[0], value = _a[1];
+        if (name && value) {
+            headers[name] = value.replace(/^\s*/g, '').replace(/\s*$/g, '');
+        }
+    });
+    return headers;
+}
+function default_1(req, res) {
+    return new Promise(function (resolve, reject) {
+        var xhr = new XHRMock_1.default.RealXMLHttpRequest();
+        // TODO: reject with the correct type of error
+        xhr.onerror = function (event) { return reject(event.error); };
+        xhr.onloadend = function () {
+            res
+                .status(xhr.status)
+                .reason(xhr.statusText)
+                .headers(parseHeaders(xhr.getAllResponseHeaders()))
+                .body(xhr.responseText);
+            resolve(res);
+        };
+        xhr.open(req.method(), req.url().toString());
+        var headers = req.headers();
+        Object.keys(headers).forEach(function (name) {
+            var value = headers[name];
+            xhr.setRequestHeader(name, value);
+        });
+        xhr.send(req.body());
+    });
+}
+exports.default = default_1;
+
+
+/***/ }),
+
+/***/ "./src/broswer/xhr-mock.js":
+/*!*********************************!*\
+  !*** ./src/broswer/xhr-mock.js ***!
+  \*********************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var xhr_mock__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! xhr-mock */ "./node_modules/xhr-mock/lib/index.js");
+/* harmony import */ var xhr_mock__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(xhr_mock__WEBPACK_IMPORTED_MODULE_0__);
+
+
+const MockAPI = {
+  addXhrMock: ({ mockURL, status, response, delay }) => {
+    xhr_mock__WEBPACK_IMPORTED_MODULE_0___default.a.teardown();
+    xhr_mock__WEBPACK_IMPORTED_MODULE_0___default.a.setup();
+
+    const resFunction = (req, res) => {
+      const body = response;
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(res.status(status).headers({'Content-Type': 'application/json'}).body(body));
+        }, delay);
+      })
+    }
+    xhr_mock__WEBPACK_IMPORTED_MODULE_0___default.a.get(mockURL, resFunction);
+    xhr_mock__WEBPACK_IMPORTED_MODULE_0___default.a.post(mockURL, resFunction);
+    xhr_mock__WEBPACK_IMPORTED_MODULE_0___default.a.put(mockURL, resFunction);
+    xhr_mock__WEBPACK_IMPORTED_MODULE_0___default.a.patch(mockURL, resFunction);
+    xhr_mock__WEBPACK_IMPORTED_MODULE_0___default.a.delete(mockURL, resFunction);
+  }
+};
+
+addEventListener('message', (event => {
+  if (event.data.id !== 'xhr-mock-api-message') return;
+  MockAPI.addXhrMock(event.data);
+}), false);
+
+document.getElementById('xhrMockApi').removeAttribute('src');
+
+/***/ })
+
+/******/ });
+//# sourceMappingURL=xhr-mock.js.map

@@ -1,1 +1,153 @@
-!function(e){var t={};function n(o){if(t[o])return t[o].exports;var r=t[o]={i:o,l:!1,exports:{}};return e[o].call(r.exports,r,r.exports,n),r.l=!0,r.exports}n.m=e,n.c=t,n.d=function(e,t,o){n.o(e,t)||Object.defineProperty(e,t,{configurable:!1,enumerable:!0,get:o})},n.r=function(e){Object.defineProperty(e,"__esModule",{value:!0})},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s=9)}({9:function(e,t){function n(e){const t=document.getElementById("response").value,n=document.getElementById("mockURL").value,o=document.getElementById("timeout").value||"100-200",r=document.getElementById("status").value;if(!n||!t||!r)return void new Notification("請確認欄位是否設定完成");const u={response:t,mockURL:n,timeout:o,status:r};chrome.tabs.query({active:!0,currentWindow:!0},e=>{chrome.tabs.sendMessage(e[0].id,u,e=>{console.log(e),localStorage.setItem("mockExtensionData",JSON.stringify(u))})}),window.close()}document.addEventListener("DOMContentLoaded",function(){let e={response:"",mockURL:"",timeout:"100-200",status:"200"};try{e=JSON.parse(localStorage.getItem("mockExtensionData"))||e}catch(e){localStorage.removeItem("mockExtensionData")}try{document.getElementById("response").value=JSON.stringify(JSON.parse(e.response),null,2)}catch(t){document.getElementById("response").value=e.response}document.getElementById("mockURL").value=e.mockURL,document.getElementById("timeout").value=e.timeout,document.getElementById("status").value=e.status;const t=document.querySelectorAll("#btn");for(var o=0;o<t.length;o++)t[o].addEventListener("click",n)})}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/extension/mock-api.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./src/extension/mock-api.js":
+/*!***********************************!*\
+  !*** ./src/extension/mock-api.js ***!
+  \***********************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mock_api_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mock-api.scss */ "./src/extension/mock-api.scss");
+/* harmony import */ var _mock_api_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mock_api_scss__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function mock(e) {
+  const response = document.getElementById('response').value;
+  const mockURL = document.getElementById('mockURL').value;
+  const timeout = document.getElementById('timeout').value || '100-200';
+  const status = document.getElementById('status').value;
+  if (!mockURL || !response || !status) {
+    new Notification("請確認欄位是否設定完成");
+    return;
+  }
+  const mockExtensionData = {
+    response,
+    mockURL,
+    timeout,
+    status
+  };
+
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    chrome.tabs.sendMessage(tabs[0].id, { ...mockExtensionData, type: 'mock' }, (response) => {
+        console.log(`response: ${response}`);
+        localStorage.setItem('mockExtensionData', JSON.stringify(mockExtensionData));
+      });
+  });
+  window.close();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  let mockExtensionData = {
+    response: '',
+    mockURL: '',
+    timeout: '100-200',
+    status: '200'
+  };
+  try {
+    mockExtensionData = JSON.parse(localStorage.getItem('mockExtensionData')) || mockExtensionData;
+  } catch(e) {
+    localStorage.removeItem('mockExtensionData');
+  }
+  try {
+    document.getElementById('response').value = JSON.stringify(JSON.parse(mockExtensionData.response), null, 2);
+  } catch (e) {
+    document.getElementById('response').value = mockExtensionData.response;
+  }
+  document.getElementById('mockURL').value = mockExtensionData.mockURL;
+  document.getElementById('timeout').value = mockExtensionData.timeout;
+  document.getElementById('status').value = mockExtensionData.status;
+  const divs = document.querySelectorAll('#btn');
+  for (var i = 0; i < divs.length; i++) {
+    divs[i].addEventListener('click', mock);
+  }
+});
+
+
+/***/ }),
+
+/***/ "./src/extension/mock-api.scss":
+/*!*************************************!*\
+  !*** ./src/extension/mock-api.scss ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ })
+
+/******/ });
+//# sourceMappingURL=mock-api.js.map

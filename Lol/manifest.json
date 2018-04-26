@@ -5,7 +5,7 @@
   "manifest_version": 2,
   "icons": {
     "16": "icon16.png",
-    "48": "icon48.png",
+    "48": "icon128.png",
     "128": "icon128.png"
   },
   "browser_action": {
@@ -15,11 +15,17 @@
   },
   "permissions": [
     "activeTab",
-    "notifications"
+    "notifications",
+    "tabs",
+    "webNavigation"
   ],
   "web_accessible_resources": ["broswer/xhr-mock.js"],
   "content_scripts" : [{
     "matches" : ["*://*/*"],
     "js" : ["extension/content.js"]
-  }]
+  }],
+  "background": {
+    "scripts": ["extension/background.js"],
+    "persistent": false
+  }
 }

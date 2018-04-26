@@ -66,78 +66,51 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/extension/content.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/extension/background.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/extension/content.js":
-/*!**********************************!*\
-  !*** ./src/extension/content.js ***!
-  \**********************************/
+/***/ "./src/extension/background.js":
+/*!*************************************!*\
+  !*** ./src/extension/background.js ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-///////////////////////////////
-// xhr-mock
-///////////////////////////////
+let timeOutId;
 
-function initial () {
-  if (window.xhrMockApi === undefined) {
-    // 將主程式置入 Browser
-    var script = document.createElement('script');
-    script.id = 'xhrMockApi';
-    document.getElementsByTagName("body")[0].appendChild(script);
-    script.src = chrome.extension.getURL('broswer/xhr-mock.js');
-    script.onload = () => {
-      console.log('xhrMockApi init');
-    };
-    script.onerror = () => {
-      console.log('xhrMockApi error');
-    }
-  }
-}
+function updateIcon() {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    chrome.tabs.sendMessage(tabs[0].id, { type: 'checkState' }, (response) => {
+      if (response) {
+        chrome.browserAction.setIcon({ path: 'icon16.png' });
+        chrome.browserAction.enable();
+      } else {
+        chrome.browserAction.setIcon({ path: 'icon16-gray.png' });
+        chrome.browserAction.disable();
+      }
+    });
+  });
+};
 
-// 執行 Browser 上 Mock 程式
-function callMockAPI(mockExtensionData) {
-  const timeout = mockExtensionData.timeout.split('-');
-  let responseTime = timeout.filter((item) => item !== '').map((time) => parseInt(time));
-  let delay = 0;
-  if (responseTime.length < 1) responseTime = [100, 200];
-  if (responseTime.length === 2) {
-    delay = Math.floor(Math.random() * Math.abs(responseTime[0] - responseTime[1])) + Math.min(responseTime[0], responseTime[1]);
-  } else if (responseTime.length === 1) {
-    delay = responseTime[0];
-  }
+// chrome.browserAction.onClicked.addListener(updateIcon);
 
-  postMessage({
-    id: 'xhr-mock-api-message',
-    type: 'mock',
-    mockURL: mockExtensionData.mockURL,
-    status: parseInt(mockExtensionData.status),
-    response: JSON.stringify(mockExtensionData.response),
-    delay
-  }, '*');
-}
+// 頁面網址改變
+// chrome.webNavigation.onCommitted.addListener(updateIcon);
+// chrome.webNavigation.onTabReplaced.addListener(updateIcon);
 
-// 偵聽主程式訊息
-chrome.runtime.onMessage.addListener((mockExtensionData, sender, sendResponse) => {
-  switch (mockExtensionData.type) {
-    case 'checkState':
-      sendResponse(window.xhrMockApi !== undefined);
-      break;
-    case 'mock':
-    default:
-      mockExtensionData.response = JSON.parse(mockExtensionData.response);
-      callMockAPI(mockExtensionData);
-      // 回給主程式 ok
-      sendResponse('ok');
-  }
+// 頁籤更新
+chrome.tabs.onUpdated.addListener(() => {
+  clearTimeout(timeOutId);
+  timeOutId = setTimeout(updateIcon, 100);
 });
+// 頁籤切換
+chrome.tabs.onSelectionChanged.addListener(updateIcon);
 
-initial();
+updateIcon();
 
 /***/ })
 
 /******/ });
-//# sourceMappingURL=content.js.map
+//# sourceMappingURL=background.js.map

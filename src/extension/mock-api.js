@@ -1,3 +1,5 @@
+import './mock-api.scss';
+
 function mock(e) {
   const response = document.getElementById('response').value;
   const mockURL = document.getElementById('mockURL').value;
@@ -15,8 +17,8 @@ function mock(e) {
   };
 
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    chrome.tabs.sendMessage(tabs[0].id, mockExtensionData, (response) => {
-        console.log(response);
+    chrome.tabs.sendMessage(tabs[0].id, { ...mockExtensionData, type: 'mock' }, (response) => {
+        console.log(`response: ${response}`);
         localStorage.setItem('mockExtensionData', JSON.stringify(mockExtensionData));
       });
   });
