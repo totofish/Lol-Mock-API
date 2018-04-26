@@ -1,6 +1,8 @@
+$color-red: #D0021B;
 $color-btn: #F0253E;
-$color-bottom-bar: #D0021B;
+$color-bottom-bar: $color-red;
 $color-bg: #F5F5F5;
+$color-line: #DADADA;
 
 html,
 body {
@@ -15,12 +17,16 @@ body {
     font-family: "PingFangTC-Regular", "Heiti Regular", sans-serif;
     color: #000000;
     font-weight: 200;
+
+    &::selection {
+      background-color: rgba($color-red, 0.15);
+    }
   }
 
   textarea,
   input {
     background: #FFFFFF;
-    border: 1px solid #DADADA;
+    border: 1px solid $color-line;
     box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.09);
     border-radius: 2px;
     outline: none;
@@ -43,18 +49,25 @@ body {
 }
 
 .header {
-  border-bottom: 1px solid #DADADA;
-  padding: 15px;
-  background-image: linear-gradient(-269deg, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0) 100%);
+  border-bottom: 1px solid $color-line;
+  height: 60px;
+  overflow: hidden;
+  background-image: linear-gradient(-90deg, rgba(208,2,27,0.00) 41%, rgba(208,2,27,0.05) 100%);
+
+  &__logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 
   &__title {
     display: inline-block;
     position: absolute;
-    top: 0;
-    margin: 15px;
-    margin-left: 10px;
+    top: 21px;
+    left: 72px;
+    margin: 0;
     font-size: 18px;
-    line-height: 30px;
+    font-weight: 600;
   }
 }
 
@@ -71,13 +84,20 @@ body {
       display: block;
     }
 
+    input,
+    textarea {
+      &:focus {
+        border: 1px solid rgba($color-red, 0.4);
+      }
+    }
+
     .input__url,
     .input__status,
-    .input__response {
+    .textarea__response {
       margin-bottom: 15px;
     }
 
-    .input__response {
+    .textarea__response {
       width: 100%;
       max-width: 100%;
       min-width: 100%;
@@ -122,17 +142,3 @@ body {
     }
   }
 }
-
-
-// #mockURL {
-//   width: 320px;
-// }
-
-// #status {
-//   width: 120px;
-// }
-
-// input,
-// textarea {
-//   margin-top: 5px;
-// }

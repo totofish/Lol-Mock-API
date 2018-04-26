@@ -1,4 +1,4 @@
-![lol-icon](Lol/icon128.png)
+![lol-icon](Lol/icon48.png)
 
 # Lol Mock Api
 
@@ -17,3 +17,6 @@
 ## Extension Install
 
 未上至 Chrome 線上應用程式商店，所以請下載 <a href="Lol.crx" target="_blank">Lol.crx</a> 後，開啟 `chrome://extensions/` 頁面後將 Lol.crx 拖進頁面中安裝
+
+## Extension
+![lol-icon](doc/app.png)

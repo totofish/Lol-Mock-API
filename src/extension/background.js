@@ -28,4 +28,20 @@ chrome.tabs.onUpdated.addListener(() => {
 // 頁籤切換
 chrome.tabs.onSelectionChanged.addListener(updateIcon);
 
+
+// 主選單設置
+chrome.contextMenus.create({
+  id: 'mock-contextMenus',
+  title: "Lol Mock API Github",
+  contexts:['browser_action']
+});
+
+chrome.contextMenus.onClicked.addListener(function(info, tab) {
+  if (info.menuItemId == 'mock-contextMenus') {
+    chrome.tabs.create({
+      url: 'https://github.com/totofish/Lol-Mock-API'
+    });
+  }
+});
+
 updateIcon();

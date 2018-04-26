@@ -6,7 +6,7 @@ function mock(e) {
   const timeout = document.getElementById('timeout').value || '100-200';
   const status = document.getElementById('status').value;
   if (!mockURL || !response || !status) {
-    new Notification("請確認欄位是否設定完成");
+    new Notification("請確認欄位是否設定完成", { icon: '../icon48.png' });
     return;
   }
   const mockExtensionData = {
