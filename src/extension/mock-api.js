@@ -69,7 +69,7 @@ function mock(e) {
         localStorage.setItem('mockExtensionData', JSON.stringify(mockExtensionData));
       });
   });
-  window.close();
+  setTimeout(window.close, 100);
 }
 
 // 欄位值改變

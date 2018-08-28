@@ -1,5 +1,5 @@
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
@@ -18,42 +18,38 @@ module.exports = {
     rules: [
       {
         test: /\.(css|s[ac]ss)$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                minimize: true,
-                sourceMap: true
-              },
-            }, {
-              loader: 'postcss-loader',
-              options: {
-                ident: 'postcss',
-                sourceMap: true,
-                plugins: () => [
-                  autoprefixer({
-                    browsers: ['last 2 versions']
-                  }),
-                ],
-              },
-            }, {
-              loader: 'sass-loader',
-              options: {
-                sourceMap: true,
-              }
+        use: [
+          MiniCSSExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              minimize: true,
+              sourceMap: true
+            },
+          }, {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              sourceMap: true,
+              plugins: () => [
+                autoprefixer({
+                  browsers: ['last 2 versions']
+                }),
+              ],
+            },
+          }, {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
             }
-          ]
-        })
+          }
+        ],
       }
     ]
   },
   plugins: [
-    new ExtractTextPlugin({
+    new MiniCSSExtractPlugin({
       filename: '[name].css',
-      allChunks: true,
-      disable: false,
-    })
+    }),
   ]
 };

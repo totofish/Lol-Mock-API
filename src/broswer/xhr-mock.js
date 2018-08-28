@@ -1,23 +1,32 @@
-import mock from 'xhr-mock';
+import { Polly } from '@pollyjs/core';
+import XHRAdapter from '@pollyjs/adapter-xhr';
+import FetchAdapter from '@pollyjs/adapter-fetch';
+
+Polly.register(XHRAdapter);
+Polly.register(FetchAdapter);
 
 const MockAPI = {
-  addXhrMock: ({ mockURL, status, response, delay }) => {
-    mock.teardown();
-    mock.setup();
-
-    const resFunction = (req, res) => {
-      const body = response;
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve(res.status(status).headers({'Content-Type': 'application/json'}).body(body));
-        }, delay);
-      })
+  polly: null,
+  addXhrMock: async ({ mockURL, status, response, delay }) => {
+    if (MockAPI.polly) {
+      await MockAPI.polly.stop();
     }
-    mock.get(mockURL, resFunction);
-    mock.post(mockURL, resFunction);
-    mock.put(mockURL, resFunction);
-    mock.patch(mockURL, resFunction);
-    mock.delete(mockURL, resFunction);
+
+    MockAPI.polly = new Polly('Lol-mock-API', {
+      adapters: ['xhr', 'fetch'],
+    });
+
+    const { server } = MockAPI.polly;
+    const resFunction = async (req, res) => {
+      await server.timeout(delay);
+      res.status(status).json(JSON.parse(response));
+    };
+
+    server.get(mockURL).intercept(resFunction);
+    server.post(mockURL).intercept(resFunction);
+    server.put(mockURL).intercept(resFunction);
+    server.patch(mockURL).intercept(resFunction);
+    server.delete(mockURL).intercept(resFunction);
   }
 };
 

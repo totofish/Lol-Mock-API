@@ -2,11 +2,13 @@
 
 # Lol Mock Api
 
-此為 chrome extension 工具，方便臨時想 Mocking XMLHttpRequest 來製作假資料、測試或模擬 API 情境狀況，使用 [xhr-mock](https://github.com/jameslnewell/xhr-mock) 製作成 chrome extension 方便使用
+[![GitHub license](https://img.shields.io/github/license/totofish/Lol-Mock-API.svg)](https://github.com/totofish/Lol-Mock-API/blob/master/LICENSE)
+
+此為 chrome extension 工具，方便臨時想 Mocking xhr 或 fetch API 來製作假資料、測試或模擬 API 情境狀況，使用 [polly.js](https://netflix.github.io/pollyjs) 製作成 chrome extension 方便使用
 
 ## 欄位說明
 
-**URL** - 必須與 api 呼叫使用完全一致的網址
+**URL** - 必須與 api 呼叫使用完全一致的網址，或部分用 `*` 替代，可參考 `polly.js` 說明
 
 **HTTP Status Code** - HTTP Status Code
 
