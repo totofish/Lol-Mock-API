@@ -1,7 +1,7 @@
 {
   "name": "Lol Mock API",
   "description": "Mock API Extension",
-  "version": "1.0",
+  "version": "1.1",
   "manifest_version": 2,
   "icons": {
     "16": "icon16.png",
@@ -18,7 +18,8 @@
     "notifications",
     "tabs",
     "webNavigation",
-    "contextMenus"
+    "contextMenus",
+    "storage"
   ],
   "web_accessible_resources": ["broswer/xhr-mock.js"],
   "content_scripts" : [{

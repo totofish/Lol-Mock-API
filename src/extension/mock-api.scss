@@ -7,7 +7,7 @@ $color-line: #DADADA;
 html,
 body {
   width: 340px;
-  height: 472px;
+  height: 60px;
   padding: 0;
   margin: 0;
   background-color: $color-bg;
@@ -53,6 +53,7 @@ body {
   height: 60px;
   overflow: hidden;
   background-image: linear-gradient(-90deg, rgba(208,2,27,0.00) 41%, rgba(208,2,27,0.05) 100%);
+  pointer-events: none;
 
   &__logo {
     position: absolute;
@@ -68,6 +69,65 @@ body {
     margin: 0;
     font-size: 18px;
     font-weight: 600;
+  }
+
+  .switch {
+    position: absolute;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+    right: 15px;
+    top: 18px;
+    pointer-events: auto;
+  }
+
+  .switch input {display:none;}
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.15) inset;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  input:checked + .slider {
+    background-color: $color-btn;
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 1px $color-btn;
+  }
+
+  input:checked + .slider:before {
+    -webkit-transform: translateX(24px);
+    -ms-transform: translateX(24px);
+    transform: translateX(24px);
+  }
+
+  .slider.round {
+    border-radius: 12px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
   }
 }
 

@@ -10,8 +10,12 @@
   <header class="header">
     <img class="header__logo" src="../imgs/logo.svg" height="60">
     <h1 class="header__title">Mock API</h1>
+    <label class="switch">
+      <input type="checkbox" id="enableSwitch">
+      <span class="slider round"></span>
+    </label>
   </header>
-  <main class="main">
+  <main class="main" id="main">
     <section class="main__form">
       <label class="label-url">URL</label>
       <input type="text" class="input__url" name="mockURL" id="mockURL" placeholder="API 路徑" value="">
