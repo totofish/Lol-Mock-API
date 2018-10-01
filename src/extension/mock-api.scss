@@ -3,6 +3,7 @@ $color-btn: #F0253E;
 $color-bottom-bar: $color-red;
 $color-bg: #F5F5F5;
 $color-line: #DADADA;
+$shadow: 1px 1px 0 #FFFFFF;
 
 html,
 body {
@@ -45,6 +46,9 @@ body {
 
   label {
     font-size: 12px;
+    font-weight: 700;
+    color: #9B9B9B;
+    text-shadow: $shadow;
   }
 }
 
@@ -68,7 +72,9 @@ body {
     left: 72px;
     margin: 0;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 700;
+    text-shadow: $shadow;
+    color: 0A0A0A;
   }
 
   .switch {
@@ -93,7 +99,7 @@ body {
     background-color: #ccc;
     -webkit-transition: .4s;
     transition: .4s;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.15) inset;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.15) inset, 1px 1px 0 0 #FFFFFF;
   }
 
   .slider:before {
@@ -199,6 +205,7 @@ body {
     padding: 0 15px;
     height: 32px;
     font-size: 16px;
+    font-weight: 700;
     background: $color-btn;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.35);
     border-radius: 2px;

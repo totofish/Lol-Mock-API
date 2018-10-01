@@ -38,7 +38,10 @@ body {
     height: 26px; }
   html label,
   body label {
-    font-size: 12px; }
+    font-size: 12px;
+    font-weight: 700;
+    color: #9B9B9B;
+    text-shadow: 1px 1px 0 #FFFFFF; }
 
 .header {
   border-bottom: 1px solid #DADADA;
@@ -58,7 +61,9 @@ body {
     left: 72px;
     margin: 0;
     font-size: 18px;
-    font-weight: 600; }
+    font-weight: 700;
+    text-shadow: 1px 1px 0 #FFFFFF;
+    color: 0A0A0A; }
   .header .switch {
     position: absolute;
     display: inline-block;
@@ -79,8 +84,8 @@ body {
     background-color: #ccc;
     -webkit-transition: .4s;
     transition: .4s;
-    -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15) inset;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15) inset; }
+    -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15) inset, 1px 1px 0 0 #FFFFFF;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15) inset, 1px 1px 0 0 #FFFFFF; }
   .header .slider:before {
     position: absolute;
     content: "";
@@ -151,6 +156,7 @@ body {
     padding: 0 15px;
     height: 32px;
     font-size: 16px;
+    font-weight: 700;
     background: #F0253E;
     -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.35);
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.35);

@@ -25,6 +25,9 @@ const storageControl = {
       }
       viewControl.enabledState(enableMode);
     });
+  },
+  saveRecord(data) {
+    localStorage.setItem('mockExtensionData', JSON.stringify(data));
   }
 }
 
@@ -33,12 +36,26 @@ const viewControl = {
     if (bo) element.classList.remove("label--warning");
     else element.classList.add("label--warning");
   },
-  // 欄位驗證
-  verify() {
+  getInputValue() {
     const mockURL = inputs.mockURL.value.trim();
     const status = inputs.status.value.trim();
     const response = inputs.response.value.trim();
     const timeout = inputs.timeout.value.trim() || '100-200';
+    return {
+      mockURL,
+      status,
+      response,
+      timeout,
+    }
+  },
+  // 欄位驗證
+  verify() {
+    const {
+      mockURL,
+      status,
+      response,
+      timeout,
+    } = viewControl.getInputValue();
 
     const verificationURL = !!mockURL;
     const verificationStatus = !!status;
@@ -89,13 +106,15 @@ const viewControl = {
 
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       chrome.tabs.sendMessage(tabs[0].id, { ...mockExtensionData, type: 'mock' }, (response) => {
-          localStorage.setItem('mockExtensionData', JSON.stringify(mockExtensionData));
+          // localStorage.setItem('mockExtensionData', JSON.stringify(mockExtensionData));
         });
     });
     setTimeout(window.close, 100);
   },
   // 欄位值改變
   handleChange(e) {
+    const data = viewControl.getInputValue();
+    storageControl.saveRecord(data);
     if (!submitted) return;
     viewControl.verify();
   },
