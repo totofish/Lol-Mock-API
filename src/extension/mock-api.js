@@ -104,12 +104,19 @@ const viewControl = {
       status
     };
 
+    viewControl.sendMessage({
+      ...mockExtensionData,
+      type: 'mock',
+    });
+
+    setTimeout(window.close, 100);
+  },
+  sendMessage(data) {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, { ...mockExtensionData, type: 'mock' }, (response) => {
+      chrome.tabs.sendMessage(tabs[0].id, data, (response) => {
           // localStorage.setItem('mockExtensionData', JSON.stringify(mockExtensionData));
         });
     });
-    setTimeout(window.close, 100);
   },
   // 欄位值改變
   handleChange(e) {
@@ -170,10 +177,14 @@ const viewControl = {
 
     const enableSwitch = document.querySelector('#enableSwitch');
     enableSwitch.addEventListener('change', (event) => {
-      if (event.target.checked !== enableMode) {
-        enableMode = event.target.checked;
+      const { checked } = event.target;
+      if (checked !== enableMode) {
+        enableMode = checked;
         storageControl.setData(enableMode);
         viewControl.enabledState(enableMode);
+        if (!checked) {
+          viewControl.sendMessage({ type: 'destroyMock' });
+        }
       }
     });
 

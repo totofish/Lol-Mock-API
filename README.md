@@ -16,6 +16,10 @@
 
 **Timeout** - 模擬 server 回應延遲時間區間毫秒，例如：`200`, `100-200`, `2000-3000`
 
+## Stop Mock
+
+將右上的 `switch` 按鈕切換至關閉狀態，便會 stop mock 行為
+
 ## Extension Install
 
 未上至 Chrome 線上應用程式商店，所以請下載 <a href="Lol.crx" target="_blank">Lol.crx</a> 後，開啟 `chrome://extensions/` 頁面後將 Lol.crx 拖進頁面中安裝

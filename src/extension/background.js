@@ -21,11 +21,20 @@ const control = {
         if (response) {
           chrome.browserAction.setIcon({ path: 'icon16.png' });
           chrome.browserAction.enable();
+          control.checkEnableState(tabs[0].id);
         } else {
           chrome.browserAction.setIcon({ path: 'icon16-gray.png' });
           chrome.browserAction.disable();
         }
       });
+    });
+  },
+  // 偵測是否啟用
+  checkEnableState(tabID) {
+    chrome.storage.local.get(['enable'], (result) => {
+      if (result.enable === false) {
+        chrome.tabs.sendMessage(tabID, { type: 'destroyMock' });
+      }
     });
   },
 };

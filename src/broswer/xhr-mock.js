@@ -32,7 +32,11 @@ const MockAPI = {
 
 addEventListener('message', (event => {
   if (event.data.id !== 'xhr-mock-api-message') return;
-  MockAPI.addXhrMock(event.data);
+  if (event.data.type === 'mock') {
+    MockAPI.addXhrMock(event.data);
+  } else if (event.data.type === 'destroy' && MockAPI.polly) {
+    MockAPI.polly.stop();
+  }
 }), false);
 
 document.getElementById('xhrMockApi').removeAttribute('src');

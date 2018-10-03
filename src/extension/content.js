@@ -30,30 +30,38 @@ function initial () {
 
 // 執行 Browser 上 Mock 程式
 function callMockAPI(mockExtensionData) {
-  const scriptPromise = initial();
-  scriptPromise.then(() => {
-    // console.log('xhrMockApi init');
-    const timeout = mockExtensionData.timeout.split('-');
-    let responseTime = timeout.filter((item) => item !== '').map((time) => parseInt(time));
-    let delay = 0;
-    if (responseTime.length < 1) responseTime = [100, 200];
-    if (responseTime.length === 2) {
-      delay = Math.floor(Math.random() * Math.abs(responseTime[0] - responseTime[1])) + Math.min(responseTime[0], responseTime[1]);
-    } else if (responseTime.length === 1) {
-      delay = responseTime[0];
-    }
-
+  const { type } = mockExtensionData;
+  if (type === 'destroy') {
     postMessage({
       id: 'xhr-mock-api-message',
-      type: 'mock',
-      mockURL: mockExtensionData.mockURL,
-      status: parseInt(mockExtensionData.status),
-      response: JSON.stringify(mockExtensionData.response),
-      delay
+      type: mockExtensionData.type,
     }, '*');
-  }).catch((err)=> {
-    console.log('xhrMockApi error', err);
-  })
+  } if (type === 'mock') {
+    const scriptPromise = initial();
+    scriptPromise.then(() => {
+      // console.log('xhrMockApi init');
+      const timeout = mockExtensionData.timeout.split('-');
+      let responseTime = timeout.filter((item) => item !== '').map((time) => parseInt(time));
+      let delay = 0;
+      if (responseTime.length < 1) responseTime = [100, 200];
+      if (responseTime.length === 2) {
+        delay = Math.floor(Math.random() * Math.abs(responseTime[0] - responseTime[1])) + Math.min(responseTime[0], responseTime[1]);
+      } else if (responseTime.length === 1) {
+        delay = responseTime[0];
+      }
+
+      postMessage({
+        id: 'xhr-mock-api-message',
+        type: mockExtensionData.type,
+        mockURL: mockExtensionData.mockURL,
+        status: parseInt(mockExtensionData.status),
+        response: JSON.stringify(mockExtensionData.response),
+        delay
+      }, '*');
+    }).catch((err)=> {
+      console.log('xhrMockApi error', err);
+    });
+  }
 }
 
 chrome.runtime.onMessage.addListener((mockExtensionData, sender, sendResponse) => {
@@ -64,10 +72,16 @@ chrome.runtime.onMessage.addListener((mockExtensionData, sender, sendResponse) =
         href: window.location.href
       }));
       break;
+    case 'destroyMock':
+      callMockAPI({ type: 'destroy' });
+      break;
     case 'mock': // 偵聽 mock-api.js 訊息
     default:
       mockExtensionData.response = JSON.parse(mockExtensionData.response);
-      callMockAPI(mockExtensionData);
+      callMockAPI({
+        ...mockExtensionData,
+        type: 'mock',
+      });
       sendResponse('ok');
   }
 });
