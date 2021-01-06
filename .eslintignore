@@ -1,0 +1,8 @@
+node_modules
+.vscode
+/Lol
+/doc
+/dist
+
+.eslintrc.js
+webpack.config.js

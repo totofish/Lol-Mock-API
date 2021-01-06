@@ -2,17 +2,20 @@
  * 外掛主視窗程式
  */
 
+import {
+  ExtensionEvent, Inputs, MockEvent, XhrMockData,
+} from '../types';
 import './mock-api.scss';
 
-let inputs = {};
+let inputs: Inputs = {};
 let submitted = false;
 let enableMode = false;
 
 // storage
 const storageControl = {
-  setData(enable) {
+  setData(enable: boolean) {
     chrome.storage.local.set({ enable }, () => {
-      console.log('Value is set to ' + enable);
+      console.log(`Value is set to ${enable ? 'true' : 'false'}`);
     });
   },
   getData() {
@@ -23,30 +26,36 @@ const storageControl = {
       } else {
         enableMode = result.enable;
       }
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       viewControl.enabledState(enableMode);
     });
   },
-  saveRecord(data) {
+  saveRecord(data: {
+    mockURL?: string;
+    status?: string;
+    response?: string;
+    timeout?: string;
+  }) {
     localStorage.setItem('mockExtensionData', JSON.stringify(data));
-  }
-}
+  },
+};
 
 const viewControl = {
-  classControl(element, bo) {
-    if (bo) element.classList.remove("label--warning");
-    else element.classList.add("label--warning");
+  classControl(element: HTMLElement | null, bo: boolean) {
+    if (bo) element?.classList.remove('label--warning');
+    else element?.classList.add('label--warning');
   },
   getInputValue() {
-    const mockURL = inputs.mockURL.value.trim();
-    const status = inputs.status.value.trim();
-    const response = inputs.response.value.trim();
-    const timeout = inputs.timeout.value.trim() || '100-200';
+    const mockURL = inputs.mockURL?.value.trim();
+    const status = inputs.status?.value.trim();
+    const response = inputs.response?.value.trim();
+    const timeout = inputs.timeout?.value.trim() || '100-200';
     return {
       mockURL,
       status,
       response,
       timeout,
-    }
+    };
   },
   // 欄位驗證
   verify() {
@@ -62,8 +71,8 @@ const viewControl = {
     let verificationResponse = !!response;
 
     try {
-      JSON.parse(response);
-    } catch(e) {
+      JSON.parse(response || '');
+    } catch (e) {
       verificationResponse = false;
     }
 
@@ -75,90 +84,96 @@ const viewControl = {
       response,
       mockURL,
       timeout,
-      status
-    }
+      status,
+    };
   },
   // 送出
-  handleMockClick(e) {
+  handleMockClick: () => {
     submitted = true;
     const {
       response,
       mockURL,
       timeout,
-      status
+      status,
     } = viewControl.verify();
     if (!mockURL || !response || !status) {
-      new Notification("請確認欄位是否設定完成", { icon: '../icon48.png' });
+      // eslint-disable-next-line no-new
+      new Notification('請確認欄位是否設定完成', { icon: '../icon48.png' });
       return;
     }
     try {
       JSON.parse(response);
-    } catch(e) {
-      new Notification("Response 需要 JSON 字串", { icon: '../icon48.png' });
+    } catch (e) {
+      // eslint-disable-next-line no-new
+      new Notification('Response 需要 JSON 字串', { icon: '../icon48.png' });
       return;
     }
     const mockExtensionData = {
       response,
       mockURL,
       timeout,
-      status
+      status,
     };
 
     viewControl.sendMessage({
       ...mockExtensionData,
-      type: 'mock',
-    });
+      type: MockEvent.MOCK,
+    } as XhrMockData);
 
     setTimeout(window.close, 100);
   },
-  sendMessage(data) {
+  sendMessage(data: XhrMockData | { type: ExtensionEvent }) {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, data, (response) => {
-          // localStorage.setItem('mockExtensionData', JSON.stringify(mockExtensionData));
-        });
+      const { id } = tabs[0];
+      if (id === undefined) return;
+      chrome.tabs.sendMessage(id, data, () => {
+        // localStorage.setItem('mockExtensionData', JSON.stringify(mockExtensionData));
+      });
     });
   },
   // 欄位值改變
-  handleChange(e) {
+  handleChange: () => {
     const data = viewControl.getInputValue();
     storageControl.saveRecord(data);
     if (!submitted) return;
     viewControl.verify();
   },
   // state
-  enabledState(enable) {
+  enabledState(enable: boolean) {
     if (
       document.readyState !== 'interactive'
       && document.readyState !== 'complete'
     ) return;
-    const main = document.querySelector('#main');
-    const enableSwitch = document.querySelector('#enableSwitch');
+    const main: HTMLElement | null = document.querySelector('#main');
+    const enableSwitch: HTMLInputElement | null = document.querySelector('#enableSwitch');
     if (enable) {
-      main.style.display = null;
-      enableSwitch.checked = true;
+      if (main) main.style.display = '';
+      if (enableSwitch) enableSwitch.checked = true;
     } else {
-      main.style.display = "none";
-      enableSwitch.checked = false;
+      if (main) main.style.display = 'none';
+      if (enableSwitch) enableSwitch.checked = false;
     }
   },
-  DOMContentLoaded() {
+  DOMContentLoaded: () => {
     inputs = {
-      mockURL: document.querySelector('#mockURL'),
-      status: document.querySelector('#status'),
-      response: document.querySelector('#response'),
-      timeout: document.querySelector('#timeout'),
+      mockURL: document.querySelector<HTMLInputElement>('#mockURL'),
+      status: document.querySelector<HTMLInputElement>('#status'),
+      response: document.querySelector<HTMLTextAreaElement>('#response'),
+      timeout: document.querySelector<HTMLInputElement>('#timeout'),
     };
+    if (!inputs.mockURL || !inputs.status || !inputs.response || !inputs.timeout) return;
+
     viewControl.enabledState(enableMode);
     // 預設值
     let mockExtensionData = {
       response: '',
       mockURL: '',
       timeout: '100-200',
-      status: '200'
+      status: '200',
     };
     try {
-      mockExtensionData = JSON.parse(localStorage.getItem('mockExtensionData')) || mockExtensionData;
-    } catch(e) {
+      mockExtensionData = <typeof mockExtensionData>JSON.parse(localStorage.getItem('mockExtensionData') || '') || mockExtensionData;
+    } catch (e) {
       localStorage.removeItem('mockExtensionData');
     }
     try {
@@ -171,29 +186,29 @@ const viewControl = {
     inputs.status.value = mockExtensionData.status;
 
     const divs = document.querySelectorAll('#btn');
-    for (var i = 0; i < divs.length; i++) {
+    for (let i = 0; i < divs.length; i += 1) {
       divs[i].addEventListener('click', viewControl.handleMockClick);
     }
 
-    const enableSwitch = document.querySelector('#enableSwitch');
-    enableSwitch.addEventListener('change', (event) => {
-      const { checked } = event.target;
+    const enableSwitch = document.querySelector<HTMLInputElement>('#enableSwitch');
+    enableSwitch?.addEventListener('change', (event: Event) => {
+      const { checked } = event.target as HTMLInputElement;
       if (checked !== enableMode) {
         enableMode = checked;
         storageControl.setData(enableMode);
         viewControl.enabledState(enableMode);
         if (!checked) {
-          viewControl.sendMessage({ type: 'destroyMock' });
+          viewControl.sendMessage({ type: ExtensionEvent.DESTROY_MOCK });
         }
       }
     });
 
     // 偵測 input 變化
     Object.keys(inputs).forEach((key) => {
-      inputs[key].addEventListener('change', viewControl.handleChange);
-      inputs[key].addEventListener('keyup', viewControl.handleChange);
+      inputs[key as keyof Inputs]?.addEventListener('change', viewControl.handleChange);
+      inputs[key as keyof Inputs]?.addEventListener('keyup', viewControl.handleChange);
     });
-  }
+  },
 };
 
 storageControl.getData();

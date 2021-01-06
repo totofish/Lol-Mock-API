@@ -4,18 +4,26 @@ const autoprefixer = require('autoprefixer');
 
 module.exports = {
   entry: {
-    'broswer/xhr-mock': './src/broswer/xhr-mock.js',
-    'extension/content': './src/extension/content.js',
-    'extension/mock-api': './src/extension/mock-api.js',
-    'extension/background': './src/extension/background.js',
+    'broswer/xhr-mock': './src/broswer/xhr-mock.ts',
+    'extension/content': './src/extension/content.ts',
+    'extension/mock-api': './src/extension/mock-api.ts',
+    'extension/background': './src/extension/background.ts',
   },
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'Lol')
   },
   devtool: false, //'source-map',
+  resolve: {
+    extensions: [ '.tsx', '.ts', '.js' ],
+  },
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
       {
         test: /\.(css|s[ac]ss)$/,
         use: [
@@ -23,19 +31,20 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              minimize: true,
               sourceMap: true
             },
           }, {
             loader: 'postcss-loader',
             options: {
-              ident: 'postcss',
               sourceMap: true,
-              plugins: () => [
-                autoprefixer({
-                  browsers: ['last 2 versions']
-                }),
-              ],
+              postcssOptions: {
+                plugins: [
+                  [
+                    "autoprefixer",
+                    { overrideBrowserslist: ['last 2 versions'] },
+                  ],
+                ],
+              },
             },
           }, {
             loader: 'sass-loader',

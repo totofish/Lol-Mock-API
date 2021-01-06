@@ -3,12 +3,13 @@
  * background.js 在打開 chrome 後只會觸發一次
  */
 
-let timeOutId;
-let enableMode;
+import { ExtensionEvent } from '../types';
+
+let timeOutId: number;
 
 const control = {
   // 更新 icon 狀態
-  updateIcon() {
+  updateIcon: () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       // tabs 還未有資料或功能停用時
       if (tabs.length === 0) {
@@ -16,12 +17,15 @@ const control = {
         chrome.browserAction.disable();
         return;
       }
+      const { id } = tabs[0];
+      if (id === undefined) return;
+
       // 偵測是否有狀態
-      chrome.tabs.sendMessage(tabs[0].id, { type: 'checkState' }, (response) => {
+      chrome.tabs.sendMessage(id, { type: ExtensionEvent.CHECK_STATE }, (response) => {
         if (response) {
           chrome.browserAction.setIcon({ path: 'icon16.png' });
           chrome.browserAction.enable();
-          control.checkEnableState(tabs[0].id);
+          control.checkEnableState(id);
         } else {
           chrome.browserAction.setIcon({ path: 'icon16-gray.png' });
           chrome.browserAction.disable();
@@ -30,15 +34,14 @@ const control = {
     });
   },
   // 偵測是否啟用
-  checkEnableState(tabID) {
+  checkEnableState: (tabID: number) => {
     chrome.storage.local.get(['enable'], (result) => {
       if (result.enable === false) {
-        chrome.tabs.sendMessage(tabID, { type: 'destroyMock' });
+        chrome.tabs.sendMessage(tabID, { type: ExtensionEvent.DESTROY_MOCK });
       }
     });
   },
 };
-
 
 // chrome.browserAction.onClicked.addListener(control.updateIcon);
 
@@ -46,30 +49,28 @@ const control = {
 // chrome.webNavigation.onCommitted.addListener(control.updateIcon);
 // chrome.webNavigation.onTabReplaced.addListener(control.updateIcon);
 
-
 // 頁籤更新
 chrome.tabs.onUpdated.addListener(() => {
   clearTimeout(timeOutId);
-  timeOutId = setTimeout(control.updateIcon, 100);
+  timeOutId = window.setTimeout(control.updateIcon, 100);
 });
 // 頁籤切換
-chrome.tabs.onSelectionChanged.addListener(control.updateIcon);
-
+chrome.tabs.onActivated.addListener(control.updateIcon);
 
 // 主選單設置 - 外掛安裝時
-chrome.runtime.onInstalled.addListener(function() {
+chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     id: 'mock-contextMenus',
-    title: "Lol Mock API Github",
-    contexts:['browser_action']
+    title: 'Lol Mock API Github',
+    contexts: ['browser_action'],
   });
 });
 
 // 點擊自訂選單時
-chrome.contextMenus.onClicked.addListener((info, tab) => {
-  if (info.menuItemId == 'mock-contextMenus') {
+chrome.contextMenus.onClicked.addListener((info) => {
+  if (info.menuItemId === 'mock-contextMenus') {
     chrome.tabs.create({
-      url: 'https://github.com/totofish/Lol-Mock-API'
+      url: 'https://github.com/totofish/Lol-Mock-API',
     });
   }
 });
