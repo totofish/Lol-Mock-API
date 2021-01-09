@@ -1,7 +1,7 @@
 /**
  * 在網頁中運行的程式，能夠讀取瀏覽器訪問的網頁的詳細信息，但是與網頁執行環境有隔離無法直接操作，
  * 但可以透過 window.postMessage 溝通，請網頁上的程式做事，
- * 另外也還可以使用 chrome.runtime.onMessage 跟 background.js, mock-api.js 傳遞訊息
+ * 另外也還可以使用 chrome.runtime.onMessage 跟 background.js, mock-extension-ui.js 傳遞訊息
  */
 
 import {
@@ -37,7 +37,7 @@ function callMockAPI(mockExtensionData: XhrMockData) {
   const { type } = mockExtensionData;
   if (type === MockEvent.DESTROY) {
     postMessage({
-      id: 'xhr-mock-api-message',
+      id: 'xhr-mock-extension-ui-message',
       type,
     } as XhrMockPayload, '*');
   } if (type === MockEvent.MOCK) {
@@ -55,7 +55,7 @@ function callMockAPI(mockExtensionData: XhrMockData) {
       }
 
       postMessage({
-        id: 'xhr-mock-api-message',
+        id: 'xhr-mock-extension-ui-message',
         type: mockExtensionData.type,
         mockURL: mockExtensionData.mockURL,
         status: mockExtensionData.status ? parseInt(mockExtensionData.status, 10) : 0,
@@ -84,6 +84,7 @@ chrome.runtime.onMessage.addListener((
     // 來自 background, extension-ui 訊息
     case ExtensionEvent.DESTROY_MOCK:
       callMockAPI({ type: MockEvent.DESTROY } as XhrMockData);
+      sendResponse('ok');
       break;
     // 來自 extension-ui 訊息
     case MockEvent.MOCK:

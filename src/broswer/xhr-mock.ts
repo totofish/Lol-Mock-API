@@ -37,7 +37,7 @@ class MockAPI {
 const mockAPI = new MockAPI();
 
 window.addEventListener('message', ((event: MessageEvent<XhrMockPayload>) => {
-  if (event.data.id !== 'xhr-mock-api-message') return;
+  if (event.data.id !== 'xhr-mock-extension-ui-message') return;
   if (event.data.type === MockEvent.MOCK) {
     void mockAPI.addXhrMock(event.data);
   } else if (event.data.type === MockEvent.DESTROY && mockAPI.polly) {

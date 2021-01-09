@@ -5,30 +5,46 @@
 
 import { ExtensionEvent } from '../types';
 
-let timeOutId: number;
-
 const control = {
+  // disable extension
+  disableExtension: () => {
+    chrome.browserAction.setIcon({ path: 'icon16-gray.png' });
+    chrome.browserAction.disable();
+  },
+  // enable extension
+  enableExtension: () => {
+    chrome.browserAction.setIcon({ path: 'icon16.png' });
+    chrome.browserAction.enable();
+  },
   // 更新 icon 狀態
   updateIcon: () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       // tabs 還未有資料或功能停用時
       if (tabs.length === 0) {
-        chrome.browserAction.setIcon({ path: 'icon16-gray.png' });
-        chrome.browserAction.disable();
+        control.disableExtension();
         return;
       }
-      const { id } = tabs[0];
+      const { id, url } = tabs[0];
+      // 非正常網頁
+      if (!url || !/^https?:/.test(url)) {
+        control.disableExtension();
+        return;
+      }
       if (id === undefined) return;
 
       // 偵測是否有狀態
       chrome.tabs.sendMessage(id, { type: ExtensionEvent.CHECK_STATE }, (response) => {
+        if (chrome.runtime.lastError) {
+          // 與 content 的連接尚未完成則跳脫
+          control.disableExtension();
+          return;
+        }
+
         if (response) {
-          chrome.browserAction.setIcon({ path: 'icon16.png' });
-          chrome.browserAction.enable();
+          control.enableExtension();
           control.checkEnableState(id);
         } else {
-          chrome.browserAction.setIcon({ path: 'icon16-gray.png' });
-          chrome.browserAction.disable();
+          control.disableExtension();
         }
       });
     });
@@ -50,10 +66,7 @@ const control = {
 // chrome.webNavigation.onTabReplaced.addListener(control.updateIcon);
 
 // 頁籤更新
-chrome.tabs.onUpdated.addListener(() => {
-  clearTimeout(timeOutId);
-  timeOutId = window.setTimeout(control.updateIcon, 100);
-});
+chrome.tabs.onUpdated.addListener(control.updateIcon);
 // 頁籤切換
 chrome.tabs.onActivated.addListener(control.updateIcon);
 
@@ -74,5 +87,3 @@ chrome.contextMenus.onClicked.addListener((info) => {
     });
   }
 });
-
-control.updateIcon();

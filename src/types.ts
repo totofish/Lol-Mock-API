@@ -5,13 +5,13 @@ export enum MockEvent {
 
 // extension 內部通知事件
 export enum ExtensionEvent {
-  CHECK_STATE = 'checkState',
-  DESTROY_MOCK = 'destroyMock',
+  CHECK_STATE = 'CHECK_STATE',
+  DESTROY_MOCK = 'DESTROY_MOCK',
 }
 
 // extension-content to broswer message
 export interface XhrMockPayload {
-  id: 'xhr-mock-api-message';
+  id: 'xhr-mock-extension-ui-message';
   type: MockEvent;
   mockURL: string;
   status: number;

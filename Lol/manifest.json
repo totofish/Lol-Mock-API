@@ -23,7 +23,7 @@
   ],
   "web_accessible_resources": ["broswer/xhr-mock.js"],
   "content_scripts" : [{
-    "matches" : ["*://*/*"],
+    "matches" : ["https://*/*", "http://*/*"],
     "js" : ["extension/content.js"]
   }],
   "background": {

@@ -6,7 +6,7 @@ module.exports = {
   entry: {
     'broswer/xhr-mock': './src/broswer/xhr-mock.ts',
     'extension/content': './src/extension/content.ts',
-    'extension/mock-api': './src/extension/mock-api.ts',
+    'extension/mock-extension-ui': './src/extension/mock-extension-ui.ts',
     'extension/background': './src/extension/background.ts',
   },
   output: {

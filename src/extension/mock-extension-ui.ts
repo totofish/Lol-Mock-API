@@ -5,7 +5,7 @@
 import {
   ExtensionEvent, Inputs, MockEvent, XhrMockData,
 } from '../types';
-import './mock-api.scss';
+import './mock-extension-ui.scss';
 
 let inputs: Inputs = {};
 let submitted = false;
@@ -127,6 +127,9 @@ const viewControl = {
       const { id } = tabs[0];
       if (id === undefined) return;
       chrome.tabs.sendMessage(id, data, () => {
+        if (chrome.runtime.lastError) {
+          console.log('lastError:', chrome.runtime.lastError);
+        }
         // localStorage.setItem('mockExtensionData', JSON.stringify(mockExtensionData));
       });
     });
